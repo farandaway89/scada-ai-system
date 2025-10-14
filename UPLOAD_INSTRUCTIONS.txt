@@ -1,0 +1,172 @@
+============================================================
+GitHub 업로드 - 가장 쉬운 방법
+============================================================
+
+프로젝트 위치: C:\developer\scada_ai_project
+Git 상태: 준비 완료 (2개 커밋, 81개 파일)
+
+============================================================
+방법 1: GitHub Desktop (추천 - 가장 쉬움)
+============================================================
+
+1. GitHub Desktop 다운로드 및 설치:
+   https://desktop.github.com/
+
+2. GitHub Desktop 실행 → Sign in (GitHub 계정 로그인)
+
+3. File → Add local repository → Choose...
+   경로 선택: C:\developer\scada_ai_project
+   → Add repository 클릭
+
+4. 상단의 "Publish repository" 버튼 클릭
+
+5. 레포지토리 설정:
+   Name: scada-ai-system
+   Description: Industrial SCADA System with AI/ML Analytics
+   Keep this code private: 체크 해제 (공개) 또는 체크 (비공개)
+
+6. "Publish repository" 클릭
+
+완료! GitHub에 자동 업로드됩니다.
+
+============================================================
+방법 2: 웹 + 명령줄
+============================================================
+
+1. 브라우저에서 GitHub 로그인:
+   https://github.com/
+
+2. 우측 상단 + 아이콘 → New repository
+
+3. 레포지토리 생성:
+   - Repository name: scada-ai-system
+   - Description: Industrial SCADA System with AI/ML Analytics
+   - Public 또는 Private 선택
+   - Initialize this repository 체크 안 함
+   - Create repository 클릭
+
+4. 생성 후 표시되는 URL 복사 (예시):
+   https://github.com/yourusername/scada-ai-system.git
+
+5. PowerShell 또는 Git Bash 실행:
+
+   cd "C:\developer\scada_ai_project"
+
+   git remote add origin https://github.com/yourusername/scada-ai-system.git
+
+   git branch -M main
+
+   git push -u origin main
+
+6. 인증 요구 시:
+   - Username: GitHub 사용자명
+   - Password: Personal Access Token (아래 참조)
+
+============================================================
+Personal Access Token 생성 (명령줄 사용 시)
+============================================================
+
+1. https://github.com/settings/tokens 접속
+
+2. "Generate new token" → "Generate new token (classic)"
+
+3. 설정:
+   - Note: SCADA AI Upload
+   - Expiration: 90 days
+   - Select scopes:
+     [✓] repo (전체 체크)
+     [✓] workflow
+
+4. "Generate token" 클릭
+
+5. 토큰 복사 (ghp_xxxxxxxxxxxx 형태)
+   중요: 한 번만 표시되므로 안전한 곳에 저장!
+
+6. git push 시 Password에 이 토큰 입력
+
+============================================================
+방법 3: 배치 파일 실행 (수동 설정 필요)
+============================================================
+
+아래 내용을 upload_to_github.bat로 저장:
+
+@echo off
+echo ============================================================
+echo GitHub 업로드 스크립트
+echo ============================================================
+echo.
+
+set /p REPO_URL="GitHub 레포지토리 URL 입력: "
+
+cd "C:\developer\scada_ai_project"
+
+git remote add origin %REPO_URL%
+git branch -M main
+git push -u origin main
+
+echo.
+echo ============================================================
+echo 업로드 완료!
+echo ============================================================
+pause
+
+실행 후 레포지토리 URL 입력:
+https://github.com/yourusername/scada-ai-system.git
+
+============================================================
+업로드 후 확인
+============================================================
+
+GitHub 레포지토리 페이지에서:
+
+1. 81개 파일 모두 업로드됨
+2. README.md가 메인 페이지에 표시
+3. docs/ 폴더의 한글 문서 정상 표시
+4. 2개 커밋 히스토리 확인
+5. Mermaid 다이어그램 자동 렌더링
+
+레포지토리 URL:
+https://github.com/yourusername/scada-ai-system
+
+============================================================
+추가 설정 (선택)
+============================================================
+
+1. About 섹션 설정:
+   - Description 추가
+   - Website 추가
+   - Topics 추가: scada, iot, ai, machine-learning, tensorflow
+
+2. GitHub Pages 활성화:
+   - Settings → Pages
+   - Source: main branch / docs folder
+   - Save
+
+3. README 배지 추가 (선택)
+
+============================================================
+문제 해결
+============================================================
+
+Q: git push 시 인증 실패?
+A: Personal Access Token을 Password로 사용하세요.
+
+Q: 파일이 안 올라감?
+A: git status 실행 후 git add . && git commit
+
+Q: 한글 파일명 깨짐?
+A: 이미 UTF-8로 처리되어 문제없습니다.
+
+Q: 업로드가 너무 느림?
+A: 43,000줄 업로드 중. 2-5분 정상.
+
+============================================================
+추천: GitHub Desktop 사용!
+============================================================
+
+가장 쉽고 빠른 방법입니다.
+클릭 몇 번으로 완료됩니다.
+
+다운로드: https://desktop.github.com/
+
+============================================================

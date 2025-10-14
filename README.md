@@ -1,6 +1,12 @@
 # SCADA AI Enterprise System
 
 Industrial Water Treatment Facility Monitoring System with AI/ML Analytics
+n## Deploy to Web
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/scada-ai?referralCode=alphasec)
+
+**One-Click Deploy**: Click the button above to deploy to Railway.app in 5 minutes!
+
 
 ## Project Overview
 
