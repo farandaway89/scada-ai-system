@@ -1,0 +1,87 @@
+Render.com 직접 배포 방법
+============================================================
+
+현재 상황: Railway.app가 로딩 중입니다.
+해결책: Render.com으로 더 빠르게 배포 가능합니다.
+
+============================================================
+Render.com 배포 (3분 완료)
+============================================================
+
+1. 브라우저 새 탭 열기
+
+2. 이 URL로 직접 접속:
+   https://dashboard.render.com/
+
+3. 로그인 (GitHub 계정으로)
+   - "Sign in with GitHub" 클릭
+
+4. 대시보드에서:
+   - "New +" 버튼 클릭
+   - "Web Service" 선택
+
+5. GitHub 레포지토리 연결:
+   - "Configure account" 클릭 (처음만)
+   - 또는 "Connect a repository" 선택
+   - "farandaway89/scada-ai-system" 검색
+   - "Connect" 클릭
+
+6. 설정 확인 (자동으로 render.yaml 감지):
+   Name: scada-ai-system
+   Environment: Docker
+   Region: Oregon
+   Plan: Free
+
+7. "Create Web Service" 클릭
+
+8. 5-7분 기다리면 완료!
+
+============================================================
+배포 완료 후
+============================================================
+
+URL이 생성됩니다:
+https://scada-ai-system.onrender.com
+
+API 문서:
+https://scada-ai-system.onrender.com/docs
+
+테스트:
+https://scada-ai-system.onrender.com/status
+
+============================================================
+문제 해결
+============================================================
+
+Q: GitHub 레포지토리가 안 보여요
+A: "Configure account" → "All repositories" 선택
+
+Q: render.yaml 오류
+A: Manual 설정:
+   - Docker
+   - Dockerfile path: ./Dockerfile
+   - Docker command: python main_application.py
+
+Q: 배포 실패
+A: Logs 확인 → 대부분 자동으로 재시도
+
+============================================================
+대안: Fly.io (더 빠름)
+============================================================
+
+만약 Render도 느리면:
+
+1. Fly.io CLI 설치:
+   powershell -Command "iwr https://fly.io/install.ps1 -useb | iex"
+
+2. 로그인:
+   fly auth login
+
+3. 배포:
+   cd C:\developer\scada_ai_project
+   fly launch --name scada-ai-system
+   fly deploy
+
+결과: https://scada-ai-system.fly.dev
+
+============================================================
