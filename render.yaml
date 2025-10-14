@@ -2,15 +2,15 @@ services:
   - type: web
     name: scada-ai-system
     env: docker
-    plan: free
-    region: oregon
     dockerfilePath: ./Dockerfile
     dockerContext: .
+    plan: free
+    autoDeploy: true
     envVars:
       - key: ENVIRONMENT
         value: production
       - key: API_PORT
-        value: 9000
+        value: 10000
       - key: LOG_LEVEL
         value: INFO
       - key: DATABASE_URL
@@ -18,4 +18,3 @@ services:
       - key: REDIS_ENABLED
         value: false
     healthCheckPath: /status
-    autoDeploy: true
