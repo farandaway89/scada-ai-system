@@ -1,12 +1,31 @@
 # SCADA AI Enterprise System
 
 Industrial Water Treatment Facility Monitoring System with AI/ML Analytics
-n## Deploy to Web
+## Deploy to Web
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/scada-ai?referralCode=alphasec)
+### Option 1: Railway.app (Best - No Sleep)
 
-**One-Click Deploy**: Click the button above to deploy to Railway.app in 5 minutes!
+1. Visit: https://railway.app/
+2. Click "Start a New Project"
+3. Select "Deploy from GitHub repo"
+4. Choose: `farandaway89/scada-ai-system`
+5. Deploy automatically in 5 minutes!
 
+**Result**: Your app at `https://your-app.up.railway.app`
+
+### Option 2: Render.com (Easy)
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com)
+
+1. Visit: https://render.com/
+2. Click "New +" → "Web Service"  
+3. Connect: `farandaway89/scada-ai-system`
+4. Click "Create Web Service"
+5. Done!
+
+**Result**: Your app at `https://scada-ai-system.onrender.com`
+
+---
 
 ## Project Overview
 
