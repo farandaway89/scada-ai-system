@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부동산 매물 분석 로봇 시스템 - 최종 프로젝트 명세서</title>
+    <style>
+        @page {
+            size: A3;
+            margin: 15mm;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.3;
+            margin: 0;
+            padding: 0;
+            font-size: 11px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: linear-gradient(45deg, #2196F3, #607d8b);
+            color: white;
+            border-radius: 8px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin: 0 0 8px 0;
+        }
+
+        .header p {
+            margin: 3px 0;
+            font-size: 14px;
+        }
+
+        .section {
+            margin: 15px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #fafafa;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            background: #2196F3;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: -15px -15px 15px -15px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+        }
+
+        .four-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            gap: 8px;
+        }
+
+        .usecase-actor {
+            background: #e3f2fd;
+            border: 1px solid #2196F3;
+            border-radius: 5px;
+            padding: 10px;
+            text-align: center;
+            font-size: 10px;
+        }
+
+        .usecase-actor h4 {
+            color: #1565c0;
+            margin: 0 0 5px 0;
+            font-size: 12px;
+        }
+
+        .usecase-item {
+            background: #f0f8ff;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 3px;
+            border-left: 3px solid #2196F3;
+            font-size: 10px;
+        }
+
+        .req-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9px;
+        }
+
+        .req-table th {
+            background: #2196F3;
+            color: white;
+            padding: 6px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .req-table td {
+            padding: 5px 6px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        .req-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .priority-high { border-left: 3px solid #f44336; }
+        .priority-medium { border-left: 3px solid #ff9800; }
+        .priority-low { border-left: 3px solid #4caf50; }
+
+        .flowchart {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: #2196F3;
+            color: white;
+            padding: 6px 12px;
+            margin: 4px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: bold;
+        }
+
+        .flow-decision {
+            background: #ff9800;
+            color: white;
+            padding: 8px;
+            margin: 4px;
+            border-radius: 50%;
+            display: inline-block;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            line-height: 44px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .flow-arrow {
+            font-size: 16px;
+            color: #2196F3;
+            margin: 0 5px;
+        }
+
+        .sitemap {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+
+        .sitemap-level1 {
+            background: #2196F3;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            margin: 5px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 11px;
+        }
+
+        .sitemap-level2 {
+            background: #ff9800;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            margin: 2px 5px;
+            display: inline-block;
+            font-size: 9px;
+        }
+
+        .mockup-screen {
+            border: 2px solid #333;
+            border-radius: 5px;
+            padding: 10px;
+            background: #f8f9fa;
+            margin: 10px 0;
+            min-height: 200px;
+        }
+
+        .mockup-header {
+            background: #2196F3;
+            color: white;
+            padding: 6px;
+            border-radius: 3px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 10px;
+        }
+
+        .mockup-widget {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            padding: 8px;
+            text-align: center;
+            font-size: 9px;
+        }
+
+        .widget-title {
+            background: #ff9800;
+            color: white;
+            padding: 3px;
+            border-radius: 2px;
+            font-size: 8px;
+            margin-bottom: 5px;
+        }
+
+        .widget-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #2196F3;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 9px;
+        }
+
+        .schedule-table th {
+            background: #2196F3;
+            color: white;
+            padding: 6px;
+            text-align: center;
+        }
+
+        .schedule-table td {
+            padding: 5px;
+            border: 1px solid #ddd;
+            vertical-align: top;
+        }
+
+        .day-1 { background: #e3f2fd; }
+        .day-2 { background: #f3e5f5; }
+        .day-3 { background: #e8f5e8; }
+        .day-4 { background: #fff3e0; }
+        .day-5 { background: #fce4ec; }
+        .day-6 { background: #e1f5fe; }
+        .day-7 { background: #e8f5e8; }
+
+        .table-spec {
+            background: white;
+            border: 1px solid #2196F3;
+            border-radius: 5px;
+            margin: 8px 0;
+            overflow: hidden;
+        }
+
+        .table-header {
+            background: #2196F3;
+            color: white;
+            padding: 8px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .table-content {
+            padding: 10px;
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 2fr 1.5fr 0.5fr 2.5fr;
+            gap: 8px;
+            padding: 3px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 9px;
+        }
+
+        .field-name {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .field-type {
+            color: #e74c3c;
+            font-family: monospace;
+        }
+
+        .field-null {
+            color: #95a5a6;
+            font-size: 8px;
+        }
+
+        .field-desc {
+            color: #7f8c8d;
+        }
+
+        .project-period {
+            background: linear-gradient(45deg, #2196F3, #1976d2);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .milestone {
+            background: #2196F3;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-size: 8px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #2196F3;
+            margin: 8px 0;
+            font-size: 10px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffc107;
+            margin: 8px 0;
+            font-size: 10px;
+        }
+
+        .success-box {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #4CAF50;
+            margin: 8px 0;
+            font-size: 10px;
+        }
+
+        h3 {
+            font-size: 14px;
+            margin: 12px 0 8px 0;
+            color: #2c3e50;
+        }
+
+        h4 {
+            font-size: 12px;
+            margin: 10px 0 6px 0;
+            color: #34495e;
+        }
+
+        h5 {
+            font-size: 11px;
+            margin: 8px 0 4px 0;
+            color: #34495e;
+        }
+
+        p {
+            margin: 5px 0;
+            font-size: 10px;
+        }
+
+        ul, ol {
+            margin: 5px 0;
+            padding-left: 15px;
+        }
+
+        li {
+            margin: 2px 0;
+            font-size: 10px;
+        }
+
+        .compact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        @media print {
+            body {
+                background: white !important;
+                font-size: 10px;
+            }
+            .section {
+                page-break-inside: avoid;
+                margin: 10px 0;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>부동산 매물 분석 로봇 시스템</h1>
+            <p>최종 프로젝트 명세서 (3.3.1 ~ 3.3.8) | 옴니휠 로봇 기반 실시간 매물 측정 및 환경 분석 시스템</p>
+        </div>
+
+        <div class="project-period">
+            프로젝트 기간: 2025/09/19(목) ~ 2025/09/25(수) 18:30 (7일간)
+        </div>
+
+        <!-- 3.3.1 유스케이스 -->
+        <div class="section">
+            <div class="section-title">3.3.1 유스케이스 (Use Case)</div>
+
+            <h3>시스템 액터</h3>
+            <div class="four-column">
+                <div class="usecase-actor">
+                    <h4>부동산 중개사</h4>
+                    <p>매물 평면도 생성 및 환경 분석</p>
+                </div>
+                <div class="usecase-actor">
+                    <h4>감정평가사</h4>
+                    <p>정확한 측정 데이터 기반 평가</p>
+                </div>
+                <div class="usecase-actor">
+                    <h4>임대업자</h4>
+                    <p>보유 부동산 정보 관리</p>
+                </div>
+                <div class="usecase-actor">
+                    <h4>분석 로봇</h4>
+                    <p>자율 측정 및 데이터 수집</p>
+                </div>
+            </div>
+
+            <div class="two-column">
+                <div>
+                    <h4>주요 유스케이스</h4>
+                    <div class="usecase-item">
+                        <strong>UC01: 자동 평면도 생성</strong><br>
+                        <small>옴니휠 로봇이 매물을 순찰하며 정밀 평면도 자동 생성</small>
+                    </div>
+                    <div class="usecase-item">
+                        <strong>UC02: 환경 품질 분석</strong><br>
+                        <small>온도, 습도, 공기질, 조도, 소음 등 종합 환경 측정</small>
+                    </div>
+                    <div class="usecase-item">
+                        <strong>UC03: 매물 리포트 생성</strong><br>
+                        <small>측정 데이터 기반 전문적인 매물 분석 리포트 자동 작성</small>
+                    </div>
+                    <div class="usecase-item">
+                        <strong>UC04: 웹 대시보드 제공</strong><br>
+                        <small>실시간 측정 진행상황 및 결과 웹 인터페이스 제공</small>
+                    </div>
+                </div>
+                <div>
+                    <h4>시나리오 예시 - UC01</h4>
+                    <div class="info-box">
+                        <strong>자동 평면도 생성</strong><br>
+                        1. 부동산 중개사가 웹에서 새로운 매물 측정 요청<br>
+                        2. 현장에서 로봇 시작 버튼 클릭<br>
+                        3. 옴니휠 로봇이 모든 방을 자동 순찰<br>
+                        4. LiDAR로 벽, 문, 창문 위치 정밀 측정<br>
+                        5. 실시간으로 평면도가 웹에서 생성됨<br>
+                        6. 측정 완료 후 CAD 수준 평면도 자동 완성<br>
+                        7. 면적 계산 및 치수 표기 자동 추가<br>
+                        8. PDF 리포트 자동 생성 및 이메일 발송
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.3.2 요구사항 명세서 -->
+        <div class="section">
+            <div class="section-title">3.3.2 요구사항 명세서</div>
+
+            <div class="two-column">
+                <div>
+                    <h3>기능적 요구사항</h3>
+                    <table class="req-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>요구사항</th>
+                                <th>우선순위</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="priority-high">
+                                <td>FR01</td>
+                                <td>옴니휠 로봇 자동 네비게이션</td>
+                                <td>높음</td>
+                            </tr>
+                            <tr class="priority-high">
+                                <td>FR02</td>
+                                <td>LiDAR 기반 정밀 평면도 생성</td>
+                                <td>높음</td>
+                            </tr>
+                            <tr class="priority-high">
+                                <td>FR03</td>
+                                <td>다중 센서 환경 데이터 수집</td>
+                                <td>높음</td>
+                            </tr>
+                            <tr class="priority-medium">
+                                <td>FR04</td>
+                                <td>실시간 웹 대시보드 시각화</td>
+                                <td>중간</td>
+                            </tr>
+                            <tr class="priority-medium">
+                                <td>FR05</td>
+                                <td>자동 리포트 생성 및 PDF 출력</td>
+                                <td>중간</td>
+                            </tr>
+                            <tr class="priority-low">
+                                <td>FR06</td>
+                                <td>매물 데이터베이스 관리</td>
+                                <td>낮음</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <h3>비기능적 요구사항</h3>
+                    <table class="req-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>요구사항</th>
+                                <th>목표값</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>NFR01</td>
+                                <td>측정 정확도</td>
+                                <td>±2cm 이내</td>
+                            </tr>
+                            <tr>
+                                <td>NFR02</td>
+                                <td>매물 측정 시간</td>
+                                <td>30분 이내</td>
+                            </tr>
+                            <tr>
+                                <td>NFR03</td>
+                                <td>배터리 지속 시간</td>
+                                <td>4시간 이상</td>
+                            </tr>
+                            <tr>
+                                <td>NFR04</td>
+                                <td>웹 응답 시간</td>
+                                <td>2초 이내</td>
+                            </tr>
+                            <tr>
+                                <td>NFR05</td>
+                                <td>동시 처리 매물</td>
+                                <td>최대 10개</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>제약사항</h4>
+                    <div class="warning-box">
+                        • 실내 환경 전용 (아파트, 빌라, 오피스텔)<br>
+                        • 최대 200㎡ 이하 매물 대상<br>
+                        • 계단 이동 불가 (엘리베이터 필요)<br>
+                        • WiFi 연결 필수 환경
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.3.3 순서도 -->
+        <div class="section">
+            <div class="section-title">3.3.3 순서도</div>
+
+            <div class="two-column">
+                <div>
+                    <h3>매물 측정 전체 흐름</h3>
+                    <div class="flowchart">
+                        <div class="flow-step">매물 정보 입력</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">로봇 현장 배치</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">센서 초기화</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step" style="background: #ff9800;">자동 순찰 시작</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-decision">모든 방<br>측정 완료?</div>
+                        <div style="margin: 10px 0;">
+                            <span style="color: #f44336; font-weight: bold; font-size: 9px;">NO</span>
+                            <div class="flow-step" style="background: #f44336;">다음 방 이동</div>
+                            <div class="flow-step" style="background: #ff9800;">측정 계속</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">평면도 생성</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">리포트 작성</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">고객 전송</div>
+                    </div>
+                </div>
+                <div>
+                    <h3>센서 데이터 처리 흐름</h3>
+                    <div class="flowchart">
+                        <div class="flow-step">LiDAR 스캔</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">환경 센서 측정</div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-decision">데이터<br>유효성?</div>
+                        <div style="margin: 8px;">
+                            <span style="color: #4CAF50; font-size: 9px;">OK</span>
+                            <div class="flow-step" style="background: #4CAF50;">데이터 저장</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-decision">실시간<br>전송?</div>
+                        <div style="margin: 8px;">
+                            <span style="color: #4CAF50; font-size: 9px;">YES</span>
+                            <div class="flow-step" style="background: #2196F3;">웹 업데이트</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-decision">측정<br>완료?</div>
+                        <div style="margin: 8px;">
+                            <span style="color: #4CAF50; font-size: 9px;">YES</span>
+                            <div class="flow-step" style="background: #ff5722;">분석 처리</div>
+                        </div>
+                        <div class="flow-arrow">↓</div>
+                        <div class="flow-step">결과 생성</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.3.4 화면 구성도 -->
+        <div class="section">
+            <div class="section-title">3.3.4 화면 구성도</div>
+
+            <div class="two-column">
+                <div>
+                    <h3>웹 시스템 메뉴 구조</h3>
+                    <div class="sitemap">
+                        <div class="sitemap-level1">메인 대시보드</div>
+                        <div style="margin-left: 10px;">
+                            <div class="sitemap-level2">진행중인 측정</div>
+                            <div class="sitemap-level2">측정 현황</div>
+                            <div class="sitemap-level2">로봇 상태</div>
+                        </div>
+
+                        <div class="sitemap-level1">매물 관리</div>
+                        <div style="margin-left: 10px;">
+                            <div class="sitemap-level2">새 매물 등록</div>
+                            <div class="sitemap-level2">매물 목록</div>
+                            <div class="sitemap-level2">측정 이력</div>
+                            <div class="sitemap-level2">리포트 다운로드</div>
+                        </div>
+
+                        <div class="sitemap-level1">로봇 제어</div>
+                        <div style="margin-left: 10px;">
+                            <div class="sitemap-level2">원격 조종</div>
+                            <div class="sitemap-level2">자동 측정</div>
+                            <div class="sitemap-level2">센서 상태</div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>화면별 구성 요소</h3>
+                    <div class="info-box">
+                        <strong>메인 대시보드</strong><br>
+                        • 상단: 로고, 실시간 시계, 사용자 정보<br>
+                        • 좌측: 측정 진행 현황 (진행률 표시)<br>
+                        • 중앙: 실시간 평면도 생성 화면<br>
+                        • 우측: 로봇 상태, 센서 데이터, 배터리<br>
+                        • 하단: 환경 측정 데이터 실시간 차트
+                    </div>
+                    <div class="info-box">
+                        <strong>매물 관리</strong><br>
+                        • 매물 기본 정보 입력 폼<br>
+                        • 측정 완료된 매물 목록<br>
+                        • 평면도 미리보기<br>
+                        • 리포트 생성 및 다운로드
+                    </div>
+                    <div class="info-box">
+                        <strong>로봇 제어</strong><br>
+                        • 실시간 로봇 위치 표시<br>
+                        • 수동 조종 인터페이스<br>
+                        • 센서 데이터 실시간 모니터링<br>
+                        • 측정 시작/중지/일시정지
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.3.5 목업 -->
+        <div class="section">
+            <div class="section-title">3.3.5 목업</div>
+
+            <div class="two-column">
+                <div>
+                    <h3>메인 대시보드</h3>
+                    <div class="mockup-screen">
+                        <div class="mockup-header">부동산 매물 분석 시스템 v1.0 | 김중개사 | 2025-09-19 14:30</div>
+
+                        <div style="display: grid; grid-template-columns: 150px 1fr 180px; gap: 8px; height: 100%;">
+                            <div style="background: #f8f9fa; padding: 5px; border-radius: 3px;">
+                                <div style="background: #2196F3; color: white; padding: 4px; margin-bottom: 4px; text-align: center; font-size: 8px;">측정 진행률</div>
+                                <div style="background: white; padding: 5px; border-radius: 2px; font-size: 8px;">
+                                    거실: 완료<br>
+                                    침실1: 진행중 (73%)<br>
+                                    침실2: 대기<br>
+                                    화장실: 대기<br>
+                                    주방: 대기
+                                </div>
+                                <div style="background: #e9ecef; padding: 3px; margin-top: 4px; font-size: 8px; text-align: center;">전체 진행률: 42%</div>
+                            </div>
+
+                            <div>
+                                <h5 style="margin: 0 0 8px 0;">실시간 평면도 생성</h5>
+                                <div style="background: white; border: 1px dashed #ccc; height: 120px; text-align: center; line-height: 120px; font-size: 8px; color: #666;">
+                                    실시간 평면도 생성 화면<br>
+                                    (LiDAR 데이터 기반 2D 맵)
+                                </div>
+
+                                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; margin-top: 8px;">
+                                    <div class="mockup-widget">
+                                        <div class="widget-title">측정 면적</div>
+                                        <div class="widget-value">84.2㎡</div>
+                                        <div style="font-size: 7px; color: #666;">전용: 73.5㎡</div>
+                                    </div>
+                                    <div class="mockup-widget">
+                                        <div class="widget-title">측정 시간</div>
+                                        <div class="widget-value">18분</div>
+                                        <div style="font-size: 7px; color: #666;">예상 완료: 12분</div>
+                                    </div>
+                                    <div class="mockup-widget">
+                                        <div class="widget-title">정확도</div>
+                                        <div class="widget-value">97.2%</div>
+                                        <div style="font-size: 7px; color: #666;">오차: ±1.2cm</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="background: #f8f9fa; padding: 5px; border-radius: 3px;">
+                                <h5 style="margin: 0 0 5px 0; color: #2196F3; font-size: 9px;">로봇 상태</h5>
+                                <div style="font-size: 8px; margin-bottom: 8px;">
+                                    위치: 침실1<br>
+                                    배터리: 78%<br>
+                                    WiFi: 연결됨<br>
+                                    상태: 측정중
+                                </div>
+
+                                <h5 style="margin: 8px 0 3px 0; color: #ff9800; font-size: 9px;">환경 데이터</h5>
+                                <div style="font-size: 7px; background: white; padding: 5px; border-radius: 2px;">
+                                    온도: 22.3°C<br>
+                                    습도: 45%<br>
+                                    CO2: 420ppm<br>
+                                    조도: 320lx<br>
+                                    소음: 35dB
+                                </div>
+
+                                <h5 style="margin: 8px 0 3px 0; color: #4CAF50; font-size: 9px;">센서 상태</h5>
+                                <div style="font-size: 8px; background: white; padding: 5px; border-radius: 2px;">
+                                    LiDAR: 정상<br>PIR: 정상<br>환경센서: 정상
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <h3>매물 리포트 화면</h3>
+                    <div class="mockup-screen">
+                        <div class="mockup-header">매물 분석 리포트 - 강남구 대치동 아파트</div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                            <div>
+                                <h5 style="margin: 0 0 5px 0;">평면도</h5>
+                                <div style="background: white; border: 1px solid #ddd; padding: 8px; border-radius: 3px; height: 80px;">
+                                    <div style="text-align: center; padding-top: 25px; font-size: 8px; color: #666;">
+                                        CAD 수준 평면도<br>
+                                        (치수 표기 포함)
+                                    </div>
+                                </div>
+
+                                <h5 style="margin: 8px 0 3px 0;">면적 정보</h5>
+                                <div style="background: white; padding: 5px; border-radius: 2px; font-size: 8px;">
+                                    • 전체 면적: 84.2㎡<br>
+                                    • 전용 면적: 73.5㎡<br>
+                                    • 거실: 23.1㎡<br>
+                                    • 침실1: 15.8㎡<br>
+                                    • 침실2: 12.4㎡<br>
+                                    • 주방: 8.9㎡<br>
+                                    • 화장실: 4.2㎡
+                                </div>
+                            </div>
+
+                            <div>
+                                <h5 style="margin: 0 0 5px 0;">환경 분석</h5>
+                                <div style="background: white; padding: 8px; border-radius: 3px; font-size: 8px;">
+                                    <strong>종합 점수: 85점 (우수)</strong><br><br>
+                                    <div style="margin-bottom: 3px;">
+                                        <strong>공기질:</strong> 82점<br>
+                                        - CO2: 평균 415ppm (양호)<br>
+                                        - 먼지: 10μg/㎥ (우수)
+                                    </div>
+                                    <div style="margin-bottom: 3px;">
+                                        <strong>채광:</strong> 88점<br>
+                                        - 평균 조도: 420lx (양호)<br>
+                                        - 남향 배치로 채광 우수
+                                    </div>
+                                    <div style="margin-bottom: 3px;">
+                                        <strong>소음:</strong> 90점<br>
+                                        - 평균 소음: 32dB (매우 조용)<br>
+                                        - 도로변과 거리 충분
+                                    </div>
+                                </div>
+
+                                <h5 style="margin: 8px 0 3px 0;">개선 제안</h5>
+                                <div style="background: #f0f8ff; padding: 5px; border-radius: 2px; font-size: 8px;">
+                                    • 침실2 환기 개선 권장<br>
+                                    • 거실 가구 배치 최적화 가능<br>
+                                    • 전반적으로 우수한 매물
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.3.6 일정표 -->
+        <div class="section">
+            <div class="section-title">3.3.6 일정표</div>
+
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th style="width: 8%;">일차</th>
+                        <th style="width: 12%;">날짜</th>
+                        <th style="width: 25%;">주요 작업</th>
+                        <th style="width: 35%;">상세 내용</th>
+                        <th style="width: 20%;">산출물</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="day-1">
+                        <td><strong>1일차</strong></td>
+                        <td>09/19 (목)</td>
+                        <td>환경 구축 및 로봇 연동</td>
+                        <td>ROS2 환경 설정, 옴니휠 로봇 연결 테스트, 센서 캘리브레이션</td>
+                        <td>로봇 제어 시스템, 센서 연동 완료</td>
+                    </tr>
+                    <tr class="day-2">
+                        <td><strong>2일차</strong></td>
+                        <td>09/20 (금)</td>
+                        <td>SLAM 및 네비게이션</td>
+                        <td>LiDAR SLAM 구현, 자동 네비게이션, 장애물 회피</td>
+                        <td>자동 순찰 시스템, 기본 매핑 기능</td>
+                    </tr>
+                    <tr class="day-3">
+                        <td><strong>3일차</strong></td>
+                        <td>09/21 (토)</td>
+                        <td>센서 데이터 통합</td>
+                        <td>다중 센서 데이터 수집, 환경 분석 알고리즘, 데이터 검증</td>
+                        <td>환경 분석 모듈, 데이터 수집 시스템</td>
+                    </tr>
+                    <tr class="day-4">
+                        <td><strong>4일차</strong></td>
+                        <td>09/22 (일)</td>
+                        <td>웹 인터페이스 개발</td>
+                        <td>실시간 대시보드, 평면도 시각화, 로봇 제어 인터페이스</td>
+                        <td>웹 대시보드, 실시간 모니터링 시스템</td>
+                    </tr>
+                    <tr class="day-5">
+                        <td><strong>5일차</strong></td>
+                        <td>09/23 (월)</td>
+                        <td>리포트 생성 시스템</td>
+                        <td>평면도 생성, 환경 분석 리포트, PDF 자동 생성</td>
+                        <td>리포트 생성 엔진, 평면도 출력 시스템</td>
+                    </tr>
+                    <tr class="day-6">
+                        <td><strong>6일차</strong></td>
+                        <td>09/24 (화)</td>
+                        <td>시스템 통합 및 테스트</td>
+                        <td>전체 시스템 통합, 실제 매물 테스트, 성능 최적화</td>
+                        <td>통합 시스템, 테스트 결과, 성능 보고서</td>
+                    </tr>
+                    <tr class="day-7">
+                        <td><strong>7일차</strong></td>
+                        <td>09/25 (수)</td>
+                        <td>최종 검수 및 데모</td>
+                        <td>버그 수정, 사용자 매뉴얼 작성, 고객 데모 준비</td>
+                        <td>최종 시스템, 사용자 매뉴얼, 데모 자료</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="four-column">
+                <div class="info-box">
+                    <strong>1-2일차</strong><br>
+                    기반 시스템 구축<br>
+                    <span class="milestone">09/20 완료</span>
+                </div>
+                <div class="info-box">
+                    <strong>3-4일차</strong><br>
+                    핵심 기능 개발<br>
+                    <span class="milestone">09/22 완료</span>
+                </div>
+                <div class="success-box">
+                    <strong>5-6일차</strong><br>
+                    시스템 완성<br>
+                    <span class="milestone">09/24 완료</span>
+                </div>
+                <div class="warning-box">
+                    <strong>7일차</strong><br>
+                    최종 점검<br>
+                    <span class="milestone">09/25 완료</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3.3.7 테이블 명세서 -->
+        <div class="section">
+            <div class="section-title">3.3.7 테이블 명세서</div>
+
+            <div class="compact-grid">
+                <div class="table-spec">
+                    <div class="table-header">매물 정보 (properties)</div>
+                    <div class="table-content">
+                        <div class="field-row" style="font-weight: bold; background: #f8f9fa;">
+                            <div>필드명</div><div>타입</div><div>NULL</div><div>설명</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">property_id</div>
+                            <div class="field-type">INT PK</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">매물 고유번호</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">address</div>
+                            <div class="field-type">VARCHAR(255)</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">매물 주소</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">property_type</div>
+                            <div class="field-type">ENUM</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">매물 유형 (아파트/빌라/오피스텔)</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">total_area</div>
+                            <div class="field-type">DECIMAL(8,2)</div>
+                            <div class="field-null">NULL</div>
+                            <div class="field-desc">전체 면적 (㎡)</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">exclusive_area</div>
+                            <div class="field-type">DECIMAL(8,2)</div>
+                            <div class="field-null">NULL</div>
+                            <div class="field-desc">전용 면적 (㎡)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-spec">
+                    <div class="table-header">측정 세션 (measurement_sessions)</div>
+                    <div class="table-content">
+                        <div class="field-row" style="font-weight: bold; background: #f8f9fa;">
+                            <div>필드명</div><div>타입</div><div>NULL</div><div>설명</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">session_id</div>
+                            <div class="field-type">INT PK</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">측정 세션 ID</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">property_id</div>
+                            <div class="field-type">INT FK</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">매물 ID</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">start_time</div>
+                            <div class="field-type">TIMESTAMP</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">측정 시작 시간</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">status</div>
+                            <div class="field-type">ENUM</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">측정 상태</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">accuracy</div>
+                            <div class="field-type">DECIMAL(5,2)</div>
+                            <div class="field-null">NULL</div>
+                            <div class="field-desc">측정 정확도 (%)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-spec">
+                    <div class="table-header">센서 데이터 (sensor_data)</div>
+                    <div class="table-content">
+                        <div class="field-row" style="font-weight: bold; background: #f8f9fa;">
+                            <div>필드명</div><div>타입</div><div>NULL</div><div>설명</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">data_id</div>
+                            <div class="field-type">BIGINT PK</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">센서 데이터 ID</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">session_id</div>
+                            <div class="field-type">INT FK</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">측정 세션 ID</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">sensor_type</div>
+                            <div class="field-type">VARCHAR(50)</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">센서 종류</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">value</div>
+                            <div class="field-type">DECIMAL(10,3)</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">측정값</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">timestamp</div>
+                            <div class="field-type">TIMESTAMP</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">측정 시간</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-spec">
+                    <div class="table-header">방 정보 (rooms)</div>
+                    <div class="table-content">
+                        <div class="field-row" style="font-weight: bold; background: #f8f9fa;">
+                            <div>필드명</div><div>타입</div><div>NULL</div><div>설명</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">room_id</div>
+                            <div class="field-type">INT PK</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">방 ID</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">property_id</div>
+                            <div class="field-type">INT FK</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">매물 ID</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">room_name</div>
+                            <div class="field-type">VARCHAR(100)</div>
+                            <div class="field-null">NOT NULL</div>
+                            <div class="field-desc">방 이름</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">area</div>
+                            <div class="field-type">DECIMAL(8,2)</div>
+                            <div class="field-null">NULL</div>
+                            <div class="field-desc">방 면적 (㎡)</div>
+                        </div>
+                        <div class="field-row">
+                            <div class="field-name">coordinates</div>
+                            <div class="field-type">JSON</div>
+                            <div class="field-null">NULL</div>
+                            <div class="field-desc">방 좌표 정보</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 프로젝트 마무리 -->
+        <div style="background: linear-gradient(45deg, #2196F3, #1976d2); color: white; padding: 20px; border-radius: 10px; text-align: center; margin-top: 20px;">
+            <h2 style="margin: 0 0 10px 0; font-size: 20px;">프로젝트 완료 목표</h2>
+            <p style="font-size: 16px; margin: 0 0 15px 0;">
+                <strong>2025년 9월 25일 18:30까지</strong><br>
+                상용 수준의 부동산 매물 분석 로봇 시스템 개발 완료
+            </p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 15px; margin-top: 15px;">
+                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 5px;">
+                    <div style="font-size: 14px; font-weight: bold;">평면도 생성</div>
+                    <div style="font-size: 12px;">CAD 수준 도면</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 5px;">
+                    <div style="font-size: 14px; font-weight: bold;">환경 분석</div>
+                    <div style="font-size: 12px;">종합 품질 평가</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 5px;">
+                    <div style="font-size: 14px; font-weight: bold;">자동 리포트</div>
+                    <div style="font-size: 12px;">PDF 자동 생성</div>
+                </div>
+                <div style="background: rgba(255,255,255,0.2); padding: 10px; border-radius: 5px;">
+                    <div style="font-size: 14px; font-weight: bold;">웹 대시보드</div>
+                    <div style="font-size: 12px;">실시간 모니터링</div>
+                </div>
+            </div>
+            <div style="margin-top: 15px; font-size: 12px; opacity: 0.9;">
+                옴니휠 로봇 기반 자동화 매물 분석 시스템 | 정확한 측정과 종합적인 환경 분석 | 부동산 업계 혁신 솔루션
+            </div>
+        </div>
+    </div>
+</body>
+</html>

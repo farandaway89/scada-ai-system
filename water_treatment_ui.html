@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지능형 수처리 시스템 - 통합 관제 대시보드</title>
+    <style>
+        /* CSS는 이전과 동일하게 유지됩니다 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #0052D4, #4364F7, #6FB1FC); min-height: 100vh; }
+        .main-container { display: grid; grid-template-areas: "header header header" "nav content sidebar" "nav footer footer"; grid-template-columns: 220px 1fr 320px; grid-template-rows: 60px 1fr 40px; height: 100vh; gap: 2px; }
+        .header, .navigation, .content, .sidebar, .footer { background: rgba(255, 255, 255, 0.98); }
+        .content { background: rgba(244, 247, 252, 0.95); }
+        .header { grid-area: header; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo-section { display: flex; align-items: center; gap: 15px; }
+        .logo { font-size: 1.8em; }
+        .system-title { font-size: 1.4em; font-weight: bold; color: #0052D4; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .status-indicator { width: 12px; height: 12px; border-radius: 50%; background: #27ae60; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .navigation { grid-area: nav; padding-top: 20px; }
+        .nav-item { display: flex; align-items: center; gap: 10px; padding: 15px 20px; cursor: pointer; transition: all 0.3s ease; }
+        .nav-item:hover, .nav-item.active { background: linear-gradient(135deg, #4364F7, #0052D4); color: white; transform: translateX(5px); }
+        .nav-icon { font-size: 1.2em; width: 25px; text-align: center; }
+        .content { grid-area: content; padding: 20px; overflow-y: auto; }
+        .content-section { display: none; } /* 모든 섹션 기본 숨김 */
+        .content-section.active { display: block; } /* 활성화된 섹션만 보임 */
+        .content-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 2px solid #ecf0f1; }
+        .content-title { font-size: 1.6em; font-weight: bold; }
+        .sensor-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .sensor-card { background: #fff; border-radius: 15px; padding: 20px; text-align: center; box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-top: 4px solid #4364F7; }
+        .sensor-icon { font-size: 3em; margin-bottom: 10px; display: block; }
+        .sensor-label { font-size: 1em; color: #7f8c8d; margin-bottom: 8px; }
+        .sensor-value { font-size: 2.5em; font-weight: bold; background: linear-gradient(135deg, #0052D4, #4364F7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .chart-section { background: #fff; border-radius: 15px; padding: 25px; margin-bottom: 25px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        .chart-header { margin-bottom: 20px; }
+        .chart-title { font-size: 1.3em; font-weight: bold; }
+        .chart-container { height: 300px; }
+        .sidebar { grid-area: sidebar; }
+        .sidebar-section { padding: 20px; border-bottom: 1px solid #ecf0f1; }
+        .sidebar-title { font-size: 1.1em; font-weight: bold; color: #2c3e50; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        .prediction-item { background: #fff; border-radius: 10px; padding: 15px; margin-bottom: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-left: 4px solid #673ab7; }
+        .prediction-header { font-weight: bold; color: #34495e; margin-bottom: 10px; }
+        .prediction-values { display: flex; justify-content: space-between; font-size: 1.2em; margin-bottom: 10px; }
+        .prediction-accuracy { text-align: right; font-size: 0.9em; color: #27ae60; font-weight: bold; }
+        .footer { grid-area: footer; background: rgba(44, 62, 80, 0.98); color: white; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <div class="logo-section">
+                <div class="logo"></div>
+                <div>
+                    <div class="system-title">지능형 수처리 시스템 - 통합 관제 대시보드</div>
+                    <div class="system-info">버전 2.0 | 2025-09-12</div>
+                </div>
+            </div>
+            <div class="user-info">
+                <div class="status-indicator"></div>
+                <span>서버 연결됨</span>
+                <span>|</span>
+                <span>운영 관리자</span>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <div class="nav-item active" onclick="showSection('dashboard')"><div class="nav-icon"></div><div>AI 대시보드</div></div>
+            <div class="nav-item" onclick="showSection('future_prediction')"><div class="nav-icon"></div><div>미래 예측</div></div>
+            <div class="nav-item" onclick="showSection('anomaly_analysis')"><div class="nav-icon"></div><div>이상 징후 분석</div></div>
+            <div class="nav-item" onclick="showSection('simulation')"><div class="nav-icon"></div><div>What-If 시뮬레이션</div></div>
+            <div class="nav-item" onclick="showSection('learning_status')"><div class="nav-icon"></div><div>온라인 학습 현황</div></div>
+        </div>
+
+        <div class="content">
+            <!-- 1. AI 대시보드 -->
+            <div id="dashboard" class="content-section active">
+                <div class="content-header"><div class="content-title">AI 실시간 대시보드</div></div>
+                <div class="sensor-grid">
+                    <div class="sensor-card"><div class="sensor-icon"></div><div class="sensor-label">pH</div><div class="sensor-value" id="ph_value">-</div></div>
+                    <div class="sensor-card"><div class="sensor-icon"></div><div class="sensor-label">용존산소 (DO)</div><div class="sensor-value" id="do_value">-</div></div>
+                    <div class="sensor-card"><div class="sensor-icon"></div><div class="sensor-label">탁도 (Turbidity)</div><div class="sensor-value" id="turbidity_value">-</div></div>
+                    <div class="sensor-card"><div class="sensor-icon"></div><div class="sensor-label">총용존고형물 (TDS)</div><div class="sensor-value" id="tds_value">-</div></div>
+                </div>
+                <div class="chart-section">
+                    <div class="chart-header"><div class="chart-title">실시간 탁도(Turbidity) 예측</div></div>
+                    <div class="chart-container"><canvas id="predictionChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- 2. 미래 예측 -->
+            <div id="future_prediction" class="content-section">
+                <div class="content-header"><div class="content-title">미래 예측</div></div>
+                <div class="chart-section">
+                    <h3>AI 기반 미래 수질 예측 및 추이 분석</h3>
+                    <p>AI 모델이 현재 및 과거 데이터를 기반으로 미래의 수질 지표(pH, DO, 탁도 등)를 예측하고, 그 변화 추이를 시각적으로 제공합니다. 이를 통해 운영자는 잠재적인 문제를 사전에 인지하고 선제적인 대응 전략을 수립할 수 있습니다.</p>
+                    <ul>
+                        <li><strong>단기 예측 (1시간, 3시간):</strong> 긴급 상황 대응 및 즉각적인 제어 조치에 활용됩니다.</li>
+                        <li><strong>중기 예측 (6시간, 24시간):</strong> 일일 운영 계획 및 자원 배분 최적화에 기여합니다.</li>
+                        <li><strong>장기 예측 (7일, 30일):</strong> 계절적 변화, 외부 환경 요인 등을 고려한 장기적인 수처리 전략 수립에 활용됩니다.</li>
+                    </ul>
+                    <p>예측 정확도와 신뢰 구간을 함께 표시하여 예측 결과의 불확실성을 명확히 전달합니다.</p>
+                    <div class="chart-container" style="height: 250px;"><canvas id="futurePredictionChart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- 3. 이상 징후 분석 -->
+            <div id="anomaly_analysis" class="content-section">
+                <div class="content-header"><div class="content-title">이상 징후 분석</div></div>
+                <div class="chart-section">
+                    <h3>AI 기반 이상 감지 및 근본 원인 진단</h3>
+                    <p>AI가 수집된 데이터에서 정상 범주를 벗어나는 패턴이나 예상치 못한 변화를 자동으로 감지하고, 그 원인을 분석하여 운영자에게 알립니다. 이는 시스템의 안정성을 높이고, 문제 해결 시간을 단축시킵니다.</p>
+                    <ul>
+                        <li><strong>실시간 이상 감지:</strong> 센서 데이터, 장비 작동 상태, 수처리 효율 등 다양한 지표에서 비정상적인 패턴을 즉시 감지합니다.</li>
+                        <li><strong>근본 원인 분석:</strong> 감지된 이상 징후와 관련된 모든 데이터를 분석하여 가장 가능성이 높은 원인(예: 특정 센서 오류, 약품 투입량 부족, 외부 오염원 유입)을 진단하고 제시합니다.</li>
+                        <li><strong>알림 및 조치 권고:</strong> 이상 징후의 심각도에 따라 알림을 발송하고, AI가 추천하는 초기 조치 방안을 함께 제공합니다.</li>
+                    </ul>
+                    <h4>최근 이상 징후 이력</h4>
+                    <table style="width:100%; border-collapse:collapse; font-size:0.9em;">
+                        <thead>
+                            <tr style="background:#f0f0f0;"><th style="padding:8px; border:1px solid #ddd; text-align:left;">시간</th><th style="padding:8px; border:1px solid #ddd; text-align:left;">유형</th><th style="padding:8px; border:1px solid #ddd; text-align:left;">내용</th><th style="padding:8px; border:1px solid #ddd; text-align:left;">원인 분석</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">2025-09-12 14:05</td><td style="padding:8px; border:1px solid #ddd;">수질 이상</td><td style="padding:8px; border:1px solid #ddd;">pH 급격한 하락 (6.5 -> 5.8)</td><td style="padding:8px; border:1px solid #ddd;">외부 산성 물질 유입 추정</td></tr>
+                            <tr><td style="padding:8px; border:1px solid #ddd;">2025-09-12 10:30</td><td style="padding:8px; border:1px solid #ddd;">장비 오류</td><td style="padding:8px; border:1px solid #ddd;">응집제 펌프 작동 중단</td><td style="padding:8px; border:1px solid #ddd;">전력 공급 불안정</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 4. What-If 시뮬레이션 -->
+            <div id="simulation" class="content-section">
+                <div class="content-header"><div class="content-title">What-If 시뮬레이션</div></div>
+                <div class="chart-section">
+                    <h3>AI 기반 가상 시나리오 분석</h3>
+                    <p>사용자가 특정 운영 변수(예: 유입량, 약품 투입량, 펌프 속도)를 변경했을 때, AI가 예측하는 미래 수질 변화 및 시스템 효율성을 시뮬레이션합니다. 다양한 시나리오를 가상으로 테스트하여 최적의 운영 전략을 수립하는 데 활용됩니다.</p>
+                    <ul>
+                        <li><strong>시나리오 정의:</strong> 변경하고자 하는 변수와 값을 입력합니다.</li>
+                        <li><strong>AI 예측:</strong> AI 모델이 입력된 시나리오에 따른 미래 수질 변화를 예측합니다.</li>
+                        <li><strong>결과 분석:</strong> 시뮬레이션 결과를 차트와 수치로 제공하여, 각 시나리오의 장단점을 비교 분석할 수 있습니다.</li>
+                    </ul>
+                    <h4>시뮬레이션 입력</h4>
+                    <div style="display:flex; gap:10px; margin-bottom:15px;">
+                        <input type="text" placeholder="변수명 (예: 유입량)" style="padding:8px; border:1px solid #ddd; border-radius:4px; flex:1;">
+                        <input type="number" placeholder="값 (예: 120)" style="padding:8px; border:1px solid #ddd; border-radius:4px; width:80px;">
+                        <button style="padding:8px 15px; background:#4364F7; color:white; border:none; border-radius:4px; cursor:pointer;">시뮬레이션 실행</button>
+                    </div>
+                    <h4>시뮬레이션 결과 (플레이스홀더)</h4>
+                    <div class="chart-container" style="height: 200px; background:#f9f9f9; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#bbb;">시뮬레이션 결과 차트 및 요약</div>
+                </div>
+            </div>
+
+            <!-- 5. 온라인 학습 현황 -->
+            <div id="learning_status" class="content-section">
+                <div class="content-header"><div class="content-title">온라인 학습 현황</div></div>
+                <div class="chart-section">
+                    <h3>AI 모델 온라인 학습 성능 모니터링</h3>
+                    <p>AI 모델이 실시간으로 새로운 데이터를 학습하며 성능이 어떻게 변화하는지 보여주는 대시보드입니다. 모델의 지속적인 개선 과정을 투명하게 확인할 수 있습니다.</p>
+                    <ul>
+                        <li><strong>실시간 MSE 추이:</strong> 모델이 새로운 데이터를 학습할 때마다 변화하는 예측 오차(MSE)를 차트로 표시합니다.</li>
+                        <li><strong>학습 데이터량:</strong> 현재까지 모델이 학습한 총 데이터 포인트 수를 보여줍니다.</li>
+                        <li><strong>재학습 주기:</strong> 모델이 자동으로 재학습되는 주기 및 다음 재학습 예정 시간을 표시합니다.</li>
+                        <li><strong>모델 버전 관리:</strong> 학습을 통해 성능이 향상된 모델의 버전을 관리하고, 필요시 이전 버전으로 롤백할 수 있는 기능을 제공합니다.</li>
+                    </ul>
+                    <div class="chart-container" style="height: 250px; background:#f9f9f9; border-radius:8px; display:flex; align-items:center; justify-content:center; color:#bbb;">온라인 학습 성능 차트</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <div class="sidebar-title">AI 예측 분석</div>
+                <div class="prediction-item">
+                    <div class="prediction-header">탁도(Turbidity) 예측</div>
+                    <div class="prediction-values">
+                        <span>실제: <b id="actual_value">-</b></span>
+                        <span>예측: <b id="predicted_value" style="color: #673ab7;">-</b></span>
+                    </div>
+                    <div class="prediction-accuracy" id="prediction_accuracy">정확도: -%</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <span>지능형 수처리 시스템 버전 2.0</span>
+            <span>마지막 업데이트: <span id="lastUpdate">-</span></span>
+        </div>
+    </div>
+
+    <script>
+        let chart;
+
+        function showSection(sectionId) {
+            // 모든 콘텐츠 섹션 숨기기
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+                section.style.display = 'none'; // 명시적으로 숨김
+            });
+            // 클릭된 섹션만 보이기
+            document.getElementById(sectionId).classList.add('active');
+            document.getElementById(sectionId).style.display = 'block'; // 명시적으로 보임
+
+            // 모든 네비게이션 아이템 비활성화
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            // 클릭된 아이템 활성화
+            event.currentTarget.classList.add('active');
+
+            // 대시보드 탭이 활성화될 때만 데이터 업데이트 시작
+            if (sectionId === 'dashboard') {
+                updateData();
+                if (!window.updateInterval) {
+                    window.updateInterval = setInterval(updateData, 5000);
+                }
+            } else {
+                // 다른 탭으로 이동 시 업데이트 중지
+                if (window.updateInterval) {
+                    clearInterval(window.updateInterval);
+                    window.updateInterval = null;
+                }
+            }
+        }
+
+        async function updateData() {
+            try {
+                // 백엔드 서버에 예측 요청
+                const response = await fetch('http://127.0.0.1:8000/predict');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+
+                if (data.error) {
+                    console.error("Backend Error:", data.error);
+                    document.querySelector('.status-indicator').style.background = '#e74c3c';
+                    document.querySelector('.user-info span').textContent = '서버 오류';
+                    return;
+                }
+                
+                document.querySelector('.status-indicator').style.background = '#27ae60';
+                document.querySelector('.user-info span').textContent = '서버 연결됨';
+
+                // UI 카드 업데이트
+                document.getElementById('ph_value').textContent = data.actual_ph.toFixed(2);
+                document.getElementById('do_value').textContent = data.actual_do.toFixed(2);
+                document.getElementById('turbidity_value').textContent = data.actual_turbidity.toFixed(2);
+                document.getElementById('tds_value').textContent = Math.round(data.actual_tds);
+
+                // 사이드바 AI 예측 섹션 업데이트
+                document.getElementById('actual_value').textContent = data.actual_turbidity.toFixed(2);
+                document.getElementById('predicted_value').textContent = data.predicted_turbidity.toFixed(2);
+                const accuracy = (100 - Math.abs(data.actual_turbidity - data.predicted_turbidity) / data.actual_turbidity * 100).toFixed(1);
+                document.getElementById('prediction_accuracy').textContent = `정확도: ${accuracy}%`;
+
+                // 차트 업데이트
+                updateChart(data.actual_turbidity, data.predicted_turbidity);
+                
+                // 마지막 업데이트 시간
+                const now = new Date();
+                const timeString = now.getHours().toString().padStart(2, '0') + ':' + 
+                                 now.getMinutes().toString().padStart(2, '0') + ':' +
+                                 now.getSeconds().toString().padStart(2, '0');
+                document.getElementById('lastUpdate').textContent = timeString;
+
+            } catch (error) {
+                console.error("Could not fetch data:", error);
+                document.querySelector('.status-indicator').style.background = '#e74c3c';
+                document.querySelector('.user-info span').textContent = '서버 연결 끊김';
+            }
+        }
+
+        function updateChart(actual, predicted) {
+            const now = new Date().toLocaleTimeString();
+            chart.data.labels.push(now);
+            chart.data.datasets[0].data.push(actual);
+            chart.data.datasets[1].data.push(predicted);
+
+            if (chart.data.labels.length > 15) { // 데이터 포인트를 15개로 늘림
+                chart.data.labels.shift();
+                chart.data.datasets[0].data.shift();
+                chart.data.datasets[1].data.shift();
+            }
+            chart.update();
+        }
+
+        window.addEventListener('load', () => {
+            const ctx = document.getElementById('predictionChart').getContext('2d');
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: '실제 탁도 (Actual Turbidity)',
+                        data: [],
+                        borderColor: 'rgb(75, 192, 192)',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        fill: true,
+                        tension: 0.2
+                    }, {
+                        label: 'AI 예측 탁도 (Predicted Turbidity)',
+                        data: [],
+                        borderColor: 'rgb(153, 102, 255)',
+                        borderDash: [5, 5],
+                        fill: false,
+                        tension: 0.2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            showSection('dashboard'); // 초기 화면을 대시보드로 설정
+        });
+    </script>
+</body>
+</html>

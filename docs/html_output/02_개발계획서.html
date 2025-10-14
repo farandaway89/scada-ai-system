@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_개발계획서</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+            font-size: 2em;
+        }
+        h3 {
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        h4 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            color: #ecf0f1;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        tr:hover {
+            background: #f0f0f0;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #555;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        .toc {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .toc h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            pre {
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SCADA AI 시스템 개발계획서</h1><h2>문서 정보</h2><table>
+<thead><tr>
+<th>항목</th>
+<th>내용</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>문서명</td>
+<td>SCADA AI 시스템 개발계획서</td>
+</tr>
+<tr>
+<td>작성일</td>
+<td>2025년 10월 13일</td>
+</tr>
+<tr>
+<td>프로젝트 코드</td>
+<td>SCADA-AI-2025</td>
+</tr>
+<tr>
+<td>버전</td>
+<td>1.0</td>
+</tr>
+</tbody></table><hr></p><h2>1. 프로젝트 배경 및 목적</h2><h3>1.1 배경</h3><p>산업 현장의 수처리 시설은 24시간 실시간 모니터링이 필수적이나, 기존 시스템은 다음과 같은 문제점을 가지고 있음:</p><h4>현재 문제점</h4>
+- 수동 모니터링으로 인한 실시간 대응 지연
+- 이상 징후 사전 감지 불가
+- 데이터 기반 의사결정 부재
+- 보안 및 규정 준수 미흡
+- 여러 시스템 간 통합 부재</p><h3>1.2 목적</h3><p>AI 기반 지능형 SCADA 시스템을 개발하여 다음을 달성:</p><p>1. <strong>운영 효율성 향상</strong>: 실시간 모니터링 및 자동화
+2. <strong>예측 유지보수</strong>: AI 기반 고장 예측
+3. <strong>보안 강화</strong>: 산업 보안 규정 준수
+4. <strong>의사결정 지원</strong>: 데이터 기반 분석 제공
+5. <strong>시스템 통합</strong>: 기존 ERP/MES 시스템과 연동</p><hr></p><h2>2. 프로젝트 범위</h2><h3>2.1 포함 범위</h3><h4>기능적 범위</h4>
+- 센서 데이터 실시간 수집 및 저장
+- AI/ML 기반 예측 분석
+- 실시간 알람 및 이벤트 관리
+- 보고서 자동 생성
+- 보안 및 인증 시스템
+- 규정 준수 모니터링
+- API 제공 (RESTful + WebSocket)</p><h4>기술적 범위</h4>
+- Docker 기반 컨테이너화
+- PostgreSQL 데이터베이스
+- TensorFlow AI 엔진
+- FastAPI 웹 프레임워크
+- Redis 캐싱
+- 산업 프로토콜 지원 (Modbus, DNP3)</p><h3>2.2 제외 범위</h3><p>- 실제 하드웨어 PLC 연동 (시뮬레이션만)
+- 모바일 앱 개발
+- 클라우드 배포 (로컬 개발 환경만)
+- 다국어 지원 (한국어/영어만)</p><hr></p><h2>3. 개발 전략</h2><h3>3.1 단계별 개발 접근</h3><p>본 프로젝트는 <strong>2단계 점진적 개발</strong> 방식 채택:</p><pre><code>Phase 1 (MVP)              Phase 2 (Enterprise)
+간단 버전                   고도화 버전
+<table>
+<thead><tr>
+<th></th>
+</tr></thead>
+<tbody>
+</tbody></table>
+    +---> 기능 검증 ---> 확장 -+
+</code></pre><h4>전략적 이유</h4>
+1. <strong>리스크 최소화</strong>: 기본 기능 먼저 검증
+2. <strong>빠른 피드백</strong>: 초기 프로토타입으로 요구사항 확인
+3. <strong>점진적 확장</strong>: 검증된 기능 위에 엔터프라이즈 기능 추가
+4. <strong>학습 곡선</strong>: 단계별로 기술 습득</p><h3>3.2 Phase 1: 간단 버전 (MVP)</h3><h4>목표</h4>
+- 핵심 기능 구현 및 기술 검증
+- 개발 환경 구축
+- 기본 아키텍처 확립</p><h4>주요 기능</h4>
+1. 센서 데이터 수집 및 저장
+2. 기본 대시보드
+3. 단순 ML 예측 (Linear Regression)
+4. RESTful API
+5. Docker 컨테이너화</p><h4>기술 스택</h4>
+<table>
+<thead><tr>
+<th>구분</th>
+<th>기술</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>백엔드</td>
+<td>FastAPI</td>
+</tr>
+<tr>
+<td>데이터베이스</td>
+<td>MySQL 8.0</td>
+</tr>
+<tr>
+<td>ML</td>
+<td>Scikit-learn</td>
+</tr>
+<tr>
+<td>컨테이너</td>
+<td>Docker Compose</td>
+</tr>
+</tbody></table><h4>개발 산출물</h4>
+- backend_server.py (147줄)
+- data_simulator.py (131줄)
+- model_trainer.py (124줄)
+- weather_fetcher.py (104줄)
+- db_connector.py (69줄)</p><h3>3.3 Phase 2: 고도화 버전 (Enterprise)</h3><h4>목표</h4>
+- 엔터프라이즈급 기능 통합
+- 보안 및 규정 준수
+- 확장 가능한 아키텍처
+- 산업 표준 프로토콜 지원</p><h4>주요 기능</h4>
+1. 10대 엔터프라이즈 모듈
+2. TensorFlow AI 엔진
+3. 보안 인증 시스템
+4. 규정 준수 자동 검사
+5. 고성능 데이터 파이프라인
+6. 전문 보고서 생성
+7. 산업 프로토콜 지원</p><h4>기술 스택</h4>
+<table>
+<thead><tr>
+<th>구분</th>
+<th>기술</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>백엔드</td>
+<td>FastAPI + Uvicorn</td>
+</tr>
+<tr>
+<td>데이터베이스</td>
+<td>PostgreSQL 14 + Redis 7</td>
+</tr>
+<tr>
+<td>AI/ML</td>
+<td>TensorFlow 2.20, XGBoost, LightGBM</td>
+</tr>
+<tr>
+<td>보안</td>
+<td>JWT, Bearer Token</td>
+</tr>
+<tr>
+<td>시각화</td>
+<td>Plotly, Matplotlib, Seaborn</td>
+</tr>
+<tr>
+<td>프로토콜</td>
+<td>Modbus, DNP3, IEC 61850</td>
+</tr>
+</tbody></table><h4>모듈 구조</h4>
+<pre><code>main_application.py (925줄)
+├── cybersecurity_framework.py (보안)
+├── compliance_audit_system.py (규정 준수)
+├── industrial_protocols.py (산업 프로토콜)
+├── realtime_monitoring.py (실시간 모니터링)
+├── ml_analytics_engine.py (AI 엔진)
+├── professional_reporting.py (보고서)
+├── enterprise_integration.py (통합)
+├── data_pipeline.py (데이터 파이프라인)
+└── [기타 지원 모듈들]
+</code></pre><hr></p><h2>4. 시스템 요구사항</h2><h3>4.1 기능 요구사항</h3><h4>FR-01: 데이터 수집</h4>
+- 실시간 센서 데이터 수집 (초당 1회)
+- 5개 센서 동시 모니터링
+- 데이터 유실 방지</p><h4>FR-02: 데이터 저장</h4>
+- 관계형 데이터베이스 저장
+- 최소 1년간 이력 보관
+- 데이터 무결성 보장</p><h4>FR-03: AI 분석</h4>
+- 이상 탐지 (Anomaly Detection)
+- 예측 분석 (Predictive Analytics)
+- 트렌드 분석
+- 신뢰도 99% 이상</p><h4>FR-04: 실시간 알람</h4>
+- 임계값 기반 알람
+- 이메일/SMS 알람 (구현 예정)
+- 알람 이력 관리</p><h4>FR-05: 보고서</h4>
+- 일일/주간/월간 보고서
+- PDF, Excel 형식 지원
+- 자동 생성 및 배포</p><h4>FR-06: 보안</h4>
+- 사용자 인증/인가
+- 감사 로그 기록
+- 데이터 암호화</p><h4>FR-07: API</h4>
+- RESTful API
+- WebSocket 실시간 통신
+- API 문서 자동 생성</p><h3>4.2 비기능 요구사항</h3><h4>NFR-01: 성능</h4>
+- API 응답 시간 < 100ms
+- 동시 사용자 100명 지원
+- 데이터 처리 속도 > 1000 records/sec</p><h4>NFR-02: 가용성</h4>
+- 시스템 가동률 99.9%
+- 자동 장애 복구
+- 헬스 체크 자동화</p><h4>NFR-03: 확장성</h4>
+- 모듈식 아키텍처
+- 센서 추가 용이
+- 수평 확장 가능</p><h4>NFR-04: 보안</h4>
+- ISO 27001 준수
+- IEC 62443 준수
+- NIST CSF 준수</p><h4>NFR-05: 유지보수성</h4>
+- 코드 문서화
+- 로그 관리
+- 모니터링 도구</p><hr></p><h2>5. 기술 아키텍처</h2><h3>5.1 시스템 구조</h3><h4>3-Tier 아키텍처</h4>
+<pre><code>Presentation Layer
+    ├── Web Dashboard
+    ├── API Gateway (FastAPI)
+    └── Swagger UI</p><p>Business Logic Layer
+    ├── Data Pipeline
+    ├── ML Engine (TensorFlow)
+    ├── Security Layer
+    ├── Protocol Handlers
+    └── Business Services</p><p>Data Layer
+    ├── PostgreSQL (영구 저장)
+    ├── Redis (캐싱)
+    └── File Storage (보고서)
+</code></pre><h3>5.2 데이터 흐름</h3><pre><code>[센서/PLC]
+    ↓ (Modbus/DNP3)
+[Protocol Handler]
+    ↓
+[Data Pipeline]
+    ├─→ [Redis Cache] → [Real-time API]
+    └─→ [PostgreSQL] → [AI Analysis] → [Dashboard]
+                            ↓
+                      [Reports]
+</code></pre><h3>5.3 보안 아키텍처</h3><pre><code>[Client]
+    ↓ HTTPS
+[API Gateway]
+    ↓ JWT Auth
+[Security Layer]
+    ├─→ [Authentication]
+    ├─→ [Authorization]
+    ├─→ [Audit Log]
+    └─→ [IP Filtering]
+        ↓
+[Business Services]
+</code></pre><hr></p><h2>6. 개발 일정</h2><h3>6.1 전체 일정</h3><table>
+<thead><tr>
+<th>Phase</th>
+<th>기간</th>
+<th>작업 내용</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Phase 0</td>
+<td>2시간</td>
+<td>환경 구축 (WSL, Docker)</td>
+</tr>
+<tr>
+<td>Phase 1</td>
+<td>3시간</td>
+<td>간단 버전 개발</td>
+</tr>
+<tr>
+<td>Phase 2</td>
+<td>6시간</td>
+<td>고도화 버전 개발</td>
+</tr>
+<tr>
+<td>통합 테스트</td>
+<td>1시간</td>
+<td>전체 시스템 테스트</td>
+</tr>
+<tr>
+<td>문서화</td>
+<td>진행 중</td>
+<td>개발 문서 작성</td>
+</tr>
+</tbody></table><h3>6.2 상세 일정</h3><h4>Phase 0: 환경 구축 (2시간)</h4>
+<pre><code>09:00-09:30  WSL 2 설치 및 설정
+09:30-10:00  Docker Desktop 설치
+10:00-10:30  개발 환경 테스트
+10:30-11:00  프로젝트 구조 설정
+</code></pre><h4>Phase 1: 간단 버전 (3시간)</h4>
+<pre><code>11:00-11:30  데이터베이스 스키마 설계
+11:30-12:30  백엔드 API 개발
+12:30-13:00  ML 모델 구현
+13:00-13:30  Docker 설정
+13:30-14:00  테스트 및 배포
+</code></pre><h4>Phase 2: 고도화 버전 (6시간)</h4>
+<pre><code>14:00-15:00  모듈 설계 및 구조화
+15:00-16:00  Security + Compliance 구현
+16:00-17:00  Protocol + Monitoring 구현
+17:00-18:00  ML Engine + Data Pipeline
+18:00-19:00  Integration + Reporting
+19:00-20:00  Docker 설정 및 배포
+20:00-21:00  통합 테스트 및 버그 수정
+</code></pre><hr></p><h2>7. 개발 팀 및 역할</h2><h3>7.1 팀 구성</h3><table>
+<thead><tr>
+<th>역할</th>
+<th>인원</th>
+<th>담당 업무</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>AI Assistant</td>
+<td>1</td>
+<td>전체 개발 (설계, 코딩, 테스트, 문서화)</td>
+</tr>
+<tr>
+<td>User</td>
+<td>1</td>
+<td>요구사항 정의, 검토</td>
+</tr>
+</tbody></table><h3>7.2 개발 도구</h3><p>- <strong>IDE</strong>: VS Code
+- <strong>버전 관리</strong>: Git
+- <strong>컨테이너</strong>: Docker Desktop
+- <strong>API 테스트</strong>: Postman, Swagger UI
+- <strong>문서</strong>: Markdown</p><hr></p><h2>8. 리스크 관리</h2><h3>8.1 기술적 리스크</h3><table>
+<thead><tr>
+<th>리스크</th>
+<th>영향도</th>
+<th>발생 가능성</th>
+<th>대응 방안</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>TensorFlow 설치 실패</td>
+<td>높음</td>
+<td>중간</td>
+<td>대체 ML 라이브러리 사용</td>
+</tr>
+<tr>
+<td>Docker 네트워크 문제</td>
+<td>중간</td>
+<td>낮음</td>
+<td>네트워크 설정 검토</td>
+</tr>
+<tr>
+<td>메모리 부족</td>
+<td>중간</td>
+<td>중간</td>
+<td>경량화 또는 리소스 증설</td>
+</tr>
+<tr>
+<td>패키지 의존성 충돌</td>
+<td>낮음</td>
+<td>높음</td>
+<td>가상환경 격리</td>
+</tr>
+</tbody></table><h3>8.2 일정 리스크</h3><table>
+<thead><tr>
+<th>리스크</th>
+<th>영향도</th>
+<th>대응 방안</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>개발 지연</td>
+<td>중간</td>
+<td>Phase별 우선순위 조정</td>
+</tr>
+<tr>
+<td>요구사항 변경</td>
+<td>낮음</td>
+<td>모듈식 구조로 유연성 확보</td>
+</tr>
+</tbody></table><hr></p><h2>9. 품질 관리</h2><h3>9.1 코드 품질</h3><p>- <strong>코드 리뷰</strong>: 주요 모듈별 검토
+- <strong>코딩 표준</strong>: PEP 8 준수
+- <strong>문서화</strong>: Docstring 작성
+- <strong>타입 힌팅</strong>: Type Annotation 사용</p><h3>9.2 테스트 전략</h3><h4>단위 테스트</h4>
+- 주요 함수별 테스트
+- 커버리지 목표: 80% 이상</p><h4>통합 테스트</h4>
+- API 엔드포인트 테스트
+- 데이터베이스 연동 테스트
+- 모듈 간 통신 테스트</p><h4>시스템 테스트</h4>
+- 전체 워크플로우 테스트
+- 성능 테스트
+- 부하 테스트</p><hr></p><h2>10. 성공 기준</h2><h3>10.1 Phase 1 성공 기준</h3><p>- [ ] Docker 컨테이너 정상 실행
+- [ ] 센서 데이터 수집 및 저장
+- [ ] ML 모델 학습 및 예측 가능
+- [ ] API 8개 정상 동작
+- [ ] 대시보드 데이터 표시</p><h3>10.2 Phase 2 성공 기준</h3><p>- [ ] 10대 모듈 모두 초기화
+- [ ] TensorFlow 엔진 로드
+- [ ] 인증 시스템 동작
+- [ ] API 12개 정상 동작
+- [ ] 규정 준수 검사 동작
+- [ ] 보고서 생성 가능</p><h3>10.3 전체 프로젝트 성공 기준</h3><p>- [ ] 양쪽 버전 모두 Docker에서 실행
+- [ ] 동시 실행 가능 (포트 8000, 9000)
+- [ ] 전체 문서 완성
+- [ ] 스크린샷 및 데모 자료 준비</p><hr></p><h2>11. 예산 및 리소스</h2><h3>11.1 하드웨어 요구사항</h3><table>
+<thead><tr>
+<th>항목</th>
+<th>최소 사양</th>
+<th>권장 사양</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>Intel i5</td>
+<td>Intel i7 이상</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>8GB</td>
+<td>16GB 이상</td>
+</tr>
+<tr>
+<td>디스크</td>
+<td>20GB</td>
+<td>50GB 이상</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>Windows 10</td>
+<td>Windows 11</td>
+</tr>
+</tbody></table><h3>11.2 소프트웨어 라이선스</h3><p>- <strong>무료 오픈소스 사용</strong>: 모든 기술 스택 무료
+- <strong>총 비용</strong>: $0</p><hr></p><h2>12. 향후 계획</h2><h3>12.1 Phase 3 (확장 계획)</h3><h4>단기 (1개월)</h4>
+- 실제 PLC 하드웨어 연동
+- RabbitMQ/Kafka 통합
+- 모바일 앱 개발</p><h4>중기 (3개월)</h4>
+- 클라우드 배포 (AWS/Azure)
+- 다중 공장 지원
+- 고급 AI 모델 (LSTM, Transformer)</p><h4>장기 (6개월)</h4>
+- ERP/MES 시스템 통합
+- 예측 유지보수 고도화
+- 글로벌 규정 준수 확대</p><hr></p><h2>부록</h2><h3>A. 참조 문서</h3><p>- ISO 27001: 정보보안 관리
+- IEC 62443: 산업 자동화 보안
+- NIST Cybersecurity Framework</p><h3>B. 용어 정의</h3><p>- <strong>SCADA</strong>: Supervisory Control and Data Acquisition
+- <strong>PLC</strong>: Programmable Logic Controller
+- <strong>OPC UA</strong>: OPC Unified Architecture
+- <strong>Modbus</strong>: 산업용 통신 프로토콜
+- <strong>DNP3</strong>: Distributed Network Protocol</p><hr></p><p><strong>문서 승인</strong></p><table>
+<thead><tr>
+<th>역할</th>
+<th>이름</th>
+<th>서명</th>
+<th>날짜</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>작성자</td>
+<td>AI Assistant</td>
+<td></td>
+<td>2025-10-13</td>
+</tr>
+<tr>
+<td>검토자</td>
+<td>User</td>
+<td></td>
+<td>2025-10-13</td>
+</tr>
+<tr>
+<td>승인자</td>
+<td>User</td>
+<td></td>
+<td>2025-10-13</td>
+</tr>
+</tbody></table><hr></p><p><strong>변경 이력</strong></p><table>
+<thead><tr>
+<th>버전</th>
+<th>날짜</th>
+<th>변경 내용</th>
+<th>작성자</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>1.0</td>
+<td>2025-10-13</td>
+<td>최초 작성</td>
+<td>AI Assistant</td>
+</tr>
+</tbody></table>
+</p>
+    </div>
+</body>
+</html>

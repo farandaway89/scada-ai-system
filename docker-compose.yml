@@ -1,0 +1,90 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:14-alpine
+    container_name: scada_postgres
+    environment:
+      POSTGRES_DB: scada_ai
+      POSTGRES_USER: scada_user
+      POSTGRES_PASSWORD: scada_pass_2024
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scada_user -d scada_ai"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - scada_network
+    restart: unless-stopped
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: scada_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - scada_network
+    restart: unless-stopped
+
+  # SCADA AI Application
+  scada-ai:
+    build: .
+    container_name: scada_ai_app
+    ports:
+      - "9000:9000"      # HTTP API
+      - "9765:9765"      # WebSocket
+    environment:
+      - ENVIRONMENT=production
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=scada_ai
+      - DB_USER=scada_user
+      - DB_PASSWORD=scada_pass_2024
+      - DATABASE_URL=postgresql://scada_user:scada_pass_2024@postgres:5432/scada_ai
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - API_PORT=9000
+      - WEBSOCKET_PORT=9765
+      - LOG_LEVEL=INFO
+    volumes:
+      - ./logs:/app/logs
+      - ./data:/app/data
+      - ./config:/app/config
+      - ./reports:/app/reports
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - scada_network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  scada_network:
+    driver: bridge

@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_파일구조_분석</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+            font-size: 2em;
+        }
+        h3 {
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        h4 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            color: #ecf0f1;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        tr:hover {
+            background: #f0f0f0;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #555;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        .toc {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .toc h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            pre {
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>프로젝트 파일 구조 상세 분석</h1><h2>1. 개요</h2><p>본 문서는 SCADA AI 시스템의 전체 파일 및 디렉토리 구조를 상세히 분석합니다.</p><h3>1.1 프로젝트 기본 정보</h3><table>
+<thead><tr>
+<th>항목</th>
+<th>내용</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>루트 디렉토리</td>
+<td><code>C:\새 폴더\scada_ai_project</code></td>
+</tr>
+<tr>
+<td>총 Python 파일</td>
+<td>26개</td>
+</tr>
+<tr>
+<td>총 설정 파일</td>
+<td>9개</td>
+</tr>
+<tr>
+<td>총 문서 파일</td>
+<td>15개</td>
+</tr>
+<tr>
+<td>총 디렉토리</td>
+<td>12개</td>
+</tr>
+</tbody></table><h2>2. 루트 디렉토리 구조</h2><pre><code>C:\새 폴더\scada_ai_project\
+│
+├── Python 애플리케이션 파일 (26개)
+│   ├── main_application.py           (925줄) - 메인 진입점
+│   ├── enterprise_backend.py         (500줄) - 엔터프라이즈 백엔드
+│   ├── start_integrated_system.py    (200줄) - 시작 스크립트
+│   ├── cybersecurity_framework.py    (550줄) - 보안 프레임워크
+│   ├── industrial_protocols.py       (700줄) - 산업 프로토콜
+│   ├── ml_analytics_engine.py        (800줄) - AI/ML 분석
+│   ├── realtime_monitoring.py        (650줄) - 실시간 모니터링
+│   ├── professional_reporting.py     (550줄) - 보고서 생성
+│   ├── compliance_audit_system.py    (600줄) - 규정 준수
+│   ├── enterprise_integration.py     (700줄) - 엔터프라이즈 통합
+│   ├── data_pipeline.py              (600줄) - 데이터 파이프라인
+│   ├── auth_manager.py               (350줄) - 인증 관리
+│   ├── config_manager.py             (300줄) - 설정 관리
+│   ├── database_manager.py           (400줄) - 데이터베이스 관리
+│   ├── deployment_manager.py         (350줄) - 배포 관리
+│   ├── api_documentation.py          (250줄) - API 문서화
+│   ├── monitoring_alerting.py        (400줄) - 모니터링 알림
+│   ├── advanced_analytics.py         (450줄) - 고급 분석
+│   ├── data_simulator.py             (131줄) - 데이터 시뮬레이터
+│   ├── weather_fetcher.py            (104줄) - 날씨 데이터
+│   ├── db_connector.py               (69줄)  - DB 커넥터
+│   ├── model_trainer.py              (124줄) - 모델 학습
+│   ├── backend_server.py             (147줄) - 레거시 서버
+│   ├── integration_test.py           (400줄) - 통합 테스트
+│   ├── simple_test.py                (150줄) - 단위 테스트
+│   └── minimal_app.py                (100줄) - 최소 앱
+│
+├── Docker 설정 파일 (2개)
+│   ├── Dockerfile                     - 컨테이너 이미지 정의
+│   └── docker-compose.yml             - 멀티 컨테이너 오케스트레이션
+│
+├── 의존성 파일 (3개)
+│   ├── requirements.txt               - 기본 의존성
+│   ├── requirements_enterprise.txt    - 엔터프라이즈 패키지
+│   └── requirements_production.txt    - 프로덕션 패키지
+│
+├── 문서 파일 (5개)
+│   ├── README_Enterprise.md           - 엔터프라이즈 README
+│   ├── deployment_guide.md            - 배포 가이드
+│   ├── hardware_requirements.md       - 하드웨어 요구사항
+│   ├── INTEGRATION_COMPLETE.md        - 통합 완료 문서
+│   └── project_summary.md             - 프로젝트 요약
+│
+└── 디렉토리 (12개)
+    ├── config/                        - 설정 파일
+    ├── data/                          - 데이터 저장소
+    ├── data/backups/                  - 백업 데이터
+    ├── docs/                          - 문서
+    ├── docs/04_완료보고서/            - 완료 보고서
+    ├── docs/diagrams/                 - 다이어그램
+    ├── docs/screenshots/              - 스크린샷
+    ├── logs/                          - 로그 파일
+    ├── logs/archive/                  - 로그 아카이브
+    ├── reports/                       - 생성된 보고서
+    ├── templates/                     - 템플릿 파일
+    └── venv/                          - Python 가상환경
+</code></pre><h2>3. Python 애플리케이션 파일 상세 분석</h2><h3>3.1 핵심 애플리케이션 파일 (3개)</h3><h4>main_application.py (925줄)</h4>
+<strong>역할</strong>: 시스템 메인 진입점
+<pre><code>클래스:
+  - SystemConfiguration: 시스템 설정
+  - SCADASystemCore: 핵심 시스템
+  - BackgroundTaskManager: 백그라운드 작업</p><p>함수:
+  - lifespan(): FastAPI 수명주기 관리
+  - main(): 메인 실행</p><p>API 엔드포인트: 12개
+  - POST /auth/login
+  - GET /status
+  - GET /health
+  - GET /monitoring/current
+  - GET /analytics/dashboard
+  - POST /reports/generate
+  - GET /compliance/dashboard
+  - GET /integration/status
+  - GET /pipeline/status
+  - GET /pipeline/metrics
+  - POST /system/shutdown
+  - GET /</p><p>의존성:
+  - FastAPI, Uvicorn
+  - 모든 엔터프라이즈 모듈 (10개)
+</code></pre><h4>enterprise_backend.py (500줄)</h4>
+<strong>역할</strong>: 엔터프라이즈 백엔드 로직
+<pre><code>클래스:
+  - EnterpriseBackend: 백엔드 관리자
+  - DataProcessor: 데이터 처리
+  - BusinessLogic: 비즈니스 로직</p><p>기능:
+  - 고급 데이터 처리
+  - 비즈니스 규칙 적용
+  - 다중 시스템 조율
+</code></pre><h4>start_integrated_system.py (200줄)</h4>
+<strong>역할</strong>: 시스템 시작 및 초기화
+<pre><code>클래스:
+  - SystemStarter: 시작 관리자</p><p>함수:
+  - check_dependencies(): 의존성 검사
+  - validate_environment(): 환경 검증
+  - start_services(): 서비스 시작
+  - health_check(): 헬스 체크
+</code></pre><h3>3.2 보안 모듈 (3개)</h3><h4>cybersecurity_framework.py (550줄)</h4>
+<strong>역할</strong>: 종합 보안 프레임워크
+<pre><code>클래스:
+  - SecurityFramework: 보안 프레임워크
+  - SecurityEvent: 보안 이벤트
+  - ThreatDetector: 위협 탐지기</p><p>열거형:
+  - ThreatType: UNAUTHORIZED_ACCESS, MALWARE, DOS_ATTACK, ...
+  - SecurityLevel: LOW, MEDIUM, HIGH, CRITICAL</p><p>기능:
+  - 사용자 인증 (JWT)
+  - 권한 검증 (RBAC)
+  - 위협 탐지
+  - 침입 탐지 시스템 (IDS)
+  - 암호화/복호화 (AES-256)
+  - IP 필터링
+</code></pre><h4>auth_manager.py (350줄)</h4>
+<strong>역할</strong>: 인증 및 세션 관리
+<pre><code>클래스:
+  - AuthManager: 인증 관리자
+  - SessionManager: 세션 관리자
+  - TokenManager: 토큰 관리자</p><p>기능:
+  - JWT 토큰 발급
+  - 토큰 검증
+  - 세션 관리 (Redis)
+  - 비밀번호 해싱 (bcrypt)
+  - 역할 기반 권한
+</code></pre><h4>compliance_audit_system.py (600줄)</h4>
+<strong>역할</strong>: 규정 준수 및 감사
+<pre><code>클래스:
+  - ComplianceManager: 규정 준수 관리
+  - AuditTrailManager: 감사 추적 관리
+  - ComplianceChecker: 규정 검사기</p><p>열거형:
+  - ComplianceStandard: ISO27001, IEC62443, NIST_CSF</p><p>기능:
+  - 규정 자동 검사
+  - 감사 로그 기록
+  - 규정 준수 보고서
+  - 이벤트 추적
+</code></pre><h3>3.3 산업 프로토콜 모듈 (1개)</h3><h4>industrial_protocols.py (700줄)</h4>
+<strong>역할</strong>: 산업 표준 프로토콜 지원
+<pre><code>클래스:
+  - ProtocolManager: 프로토콜 관리자
+  - ModbusTCPHandler: Modbus TCP 처리
+  - DNP3Handler: DNP3 처리
+  - IEC61850Handler: IEC61850 처리</p><p>열거형:
+  - ProtocolType: MODBUS_TCP, MODBUS_RTU, DNP3, IEC61850, BACNET, OPCUA</p><p>기능:
+  - 6가지 산업 프로토콜 지원
+  - 레지스터 읽기/쓰기
+  - 코일 읽기/쓰기
+  - 자동 재연결
+  - 프로토콜 변환
+</code></pre><h3>3.4 AI/ML 분석 모듈 (3개)</h3><h4>ml_analytics_engine.py (800줄)</h4>
+<strong>역할</strong>: 머신러닝 분석 엔진
+<pre><code>클래스:
+  - MLAnalyticsEngine: ML 엔진
+  - TimeSeriesPredictor: 시계열 예측
+  - AnomalyDetector: 이상 탐지
+  - PredictiveMaintenance: 예측 정비</p><p>열거형:
+  - AnalyticsType: TIME_SERIES, ANOMALY, PREDICTIVE, OPTIMIZATION, ...</p><p>모델:
+  - LSTM, GRU (시계열)
+  - Isolation Forest (이상 탐지)
+  - XGBoost, LightGBM (예측)
+  - Autoencoder (이상 탐지)</p><p>기능:
+  - TensorFlow 기반 딥러닝
+  - 실시간 예측
+  - 모델 자동 학습
+  - 성능 모니터링
+</code></pre><h4>advanced_analytics.py (450줄)</h4>
+<strong>역할</strong>: 고급 데이터 분석
+<pre><code>클래스:
+  - AdvancedAnalytics: 고급 분석
+  - StatisticalAnalyzer: 통계 분석
+  - PatternRecognizer: 패턴 인식</p><p>기능:
+  - 통계 분석
+  - 상관관계 분석
+  - 트렌드 분석
+  - 패턴 발견
+</code></pre><h4>model_trainer.py (124줄)</h4>
+<strong>역할</strong>: 모델 학습 유틸리티
+<pre><code>클래스:
+  - ModelTrainer: 모델 학습기</p><p>기능:
+  - Scikit-learn 모델 학습
+  - 하이퍼파라미터 튜닝
+  - 모델 평가
+  - 모델 저장/로드
+</code></pre><h3>3.5 실시간 모니터링 모듈 (2개)</h3><h4>realtime_monitoring.py (650줄)</h4>
+<strong>역할</strong>: 실시간 센서 모니터링
+<pre><code>클래스:
+  - RealTimeMonitoringSystem: 모니터링 시스템
+  - MonitoringPoint: 모니터링 포인트
+  - AlertRule: 알람 규칙
+  - AlertManager: 알람 관리자</p><p>열거형:
+  - AlertType: THRESHOLD, RATE_OF_CHANGE, SENSOR_FAILURE, ...
+  - AlertPriority: LOW, MEDIUM, HIGH, CRITICAL</p><p>기능:
+  - 5개 센서 실시간 추적
+  - 알람 규칙 엔진
+  - 자동 알림
+  - WebSocket 푸시
+</code></pre><h4>monitoring_alerting.py (400줄)</h4>
+<strong>역할</strong>: 알람 및 알림 시스템
+<pre><code>클래스:
+  - AlertingSystem: 알림 시스템
+  - NotificationManager: 알림 관리자</p><p>기능:
+  - 이메일 알림
+  - SMS 알림
+  - Slack/Teams 통합
+  - 알람 이력
+</code></pre><h3>3.6 보고서 생성 모듈 (1개)</h3><h4>professional_reporting.py (550줄)</h4>
+<strong>역할</strong>: 전문 보고서 자동 생성
+<pre><code>클래스:
+  - ReportGenerator: 보고서 생성기
+  - ReportTemplate: 보고서 템플릿
+  - ChartGenerator: 차트 생성기</p><p>열거형:
+  - ReportType: DAILY, WEEKLY, MONTHLY, INCIDENT, COMPLIANCE, ...
+  - ReportFormat: PDF, HTML, EXCEL, JSON</p><p>기능:
+  - Jinja2 템플릿 렌더링
+  - PDF 생성 (선택적 pdfkit)
+  - Excel 생성
+  - 차트 삽입 (Matplotlib, Seaborn)
+  - 자동 스케줄링
+</code></pre><h3>3.7 엔터프라이즈 통합 모듈 (1개)</h3><h4>enterprise_integration.py (700줄)</h4>
+<strong>역할</strong>: 외부 시스템 통합
+<pre><code>클래스:
+  - EnterpriseIntegrationManager: 통합 관리자
+  - ERPConnector: ERP 연결
+  - MESConnector: MES 연결
+  - CloudConnector: 클라우드 연결</p><p>열거형:
+  - IntegrationType: ERP, MES, SCADA, DATABASE, CLOUD, MESSAGE_QUEUE</p><p>기능:
+  - SAP, Oracle ERP 통합
+  - 제조 실행 시스템 (MES)
+  - RabbitMQ (선택)
+  - Kafka (선택)
+  - Azure IoT (선택)
+  - GCP IoT (선택)
+</code></pre><h3>3.8 데이터 파이프라인 모듈 (2개)</h3><h4>data_pipeline.py (600줄)</h4>
+<strong>역할</strong>: 고성능 데이터 파이프라인
+<pre><code>클래스:
+  - IntegratedDataPipeline: 통합 파이프라인
+  - PipelineStage: 파이프라인 단계
+  - DataValidator: 데이터 검증기</p><p>열거형:
+  - DataPipelineStage: COLLECTION, VALIDATION, TRANSFORMATION, ...</p><p>기능:
+  - 다단계 데이터 처리
+  - 실시간 스트리밍
+  - 배치 처리
+  - 에러 복구
+  - 성능 메트릭
+</code></pre><h4>database_manager.py (400줄)</h4>
+<strong>역할</strong>: 데이터베이스 관리
+<pre><code>클래스:
+  - DatabaseManager: DB 관리자
+  - ConnectionPool: 연결 풀
+  - QueryOptimizer: 쿼리 최적화</p><p>기능:
+  - PostgreSQL 연결 관리
+  - Redis 캐시 관리
+  - 트랜잭션 관리
+  - 마이그레이션
+</code></pre><h3>3.9 설정 및 배포 모듈 (3개)</h3><h4>config_manager.py (300줄)</h4>
+<strong>역할</strong>: 설정 관리
+<pre><code>클래스:
+  - ConfigManager: 설정 관리자
+  - EnvironmentConfig: 환경별 설정</p><p>기능:
+  - YAML/JSON/ENV 파싱
+  - 환경별 설정 (dev, staging, prod)
+  - 설정 검증
+  - 동적 설정 업데이트
+</code></pre><h4>deployment_manager.py (350줄)</h4>
+<strong>역할</strong>: 배포 자동화
+<pre><code>클래스:
+  - DeploymentManager: 배포 관리자</p><p>기능:
+  - Docker 컨테이너 관리
+  - 헬스 체크
+  - 롤링 업데이트
+  - 롤백
+</code></pre><h4>api_documentation.py (250줄)</h4>
+<strong>역할</strong>: API 문서 자동 생성
+<pre><code>클래스:
+  - APIDocGenerator: API 문서 생성기</p><p>기능:
+  - Swagger/OpenAPI 3.0
+  - 인터랙티브 문서
+  - 코드 예제
+</code></pre><h3>3.10 유틸리티 및 테스트 (7개)</h3><table>
+<thead><tr>
+<th>파일</th>
+<th>라인 수</th>
+<th>역할</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>data_simulator.py</td>
+<td>131줄</td>
+<td>테스트 데이터 생성</td>
+</tr>
+<tr>
+<td>weather_fetcher.py</td>
+<td>104줄</td>
+<td>외부 날씨 API</td>
+</tr>
+<tr>
+<td>db_connector.py</td>
+<td>69줄</td>
+<td>데이터베이스 커넥터</td>
+</tr>
+<tr>
+<td>integration_test.py</td>
+<td>400줄</td>
+<td>통합 테스트</td>
+</tr>
+<tr>
+<td>simple_test.py</td>
+<td>150줄</td>
+<td>단위 테스트</td>
+</tr>
+<tr>
+<td>minimal_app.py</td>
+<td>100줄</td>
+<td>최소 실행 앱</td>
+</tr>
+<tr>
+<td>backend_server.py</td>
+<td>147줄</td>
+<td>레거시 서버 (참조용)</td>
+</tr>
+</tbody></table><h2>4. Docker 설정 파일</h2><h3>4.1 Dockerfile</h3>
+<pre><code>위치: ./Dockerfile
+크기: 약 50줄
+목적: 컨테이너 이미지 빌드</p><p>구조:
+  - FROM python:3.11-slim
+  - 시스템 패키지 설치 (gcc, g++, libpq-dev, ...)
+  - Python 패키지 설치 (40개 이상)
+  - 애플리케이션 복사
+  - EXPOSE 9000 9765
+  - CMD ["python", "main_application.py"]
+</code></pre><h3>4.2 docker-compose.yml</h3>
+<pre><code>위치: ./docker-compose.yml
+크기: 약 80줄
+목적: 멀티 컨테이너 오케스트레이션</p><p>서비스:
+  1. postgres (PostgreSQL 14)
+     - 포트: 5432
+     - 볼륨: postgres_data
+     - 헬스체크: pg_isready</p><p>  2. redis (Redis 7)
+     - 포트: 6379
+     - 볼륨: redis_data
+     - 헬스체크: redis-cli ping</p><p>  3. scada-ai (메인 애플리케이션)
+     - 포트: 9000, 9765
+     - 볼륨: logs, data, reports
+     - depends_on: postgres, redis</p><p>볼륨:
+  - postgres_data
+  - redis_data
+</code></pre><h2>5. 의존성 파일</h2><h3>5.1 requirements.txt (기본)</h3>
+<pre><code>위치: ./requirements.txt
+패키지 수: 약 20개</p><p>주요 패키지:
+  - fastapi>=0.75.0
+  - uvicorn[standard]>=0.17.0
+  - sqlalchemy>=1.4.0
+  - pandas>=1.4.0
+  - numpy>=1.22.0
+  - scikit-learn>=1.0.0
+</code></pre><h3>5.2 requirements_enterprise.txt (엔터프라이즈)</h3>
+<pre><code>위치: ./requirements_enterprise.txt
+패키지 수: 약 50개</p><p>추가 패키지:
+  - tensorflow>=2.8.0
+  - xgboost>=1.5.0
+  - lightgbm>=3.3.0
+  - pymodbus>=2.5.0
+  - python-jose[cryptography]>=3.3.0
+  - celery>=5.2.0
+  - matplotlib>=3.5.0
+  - seaborn>=0.11.0
+</code></pre><h3>5.3 requirements_production.txt (프로덕션)</h3>
+<pre><code>위치: ./requirements_production.txt
+패키지 수: 약 40개</p><p>프로덕션 최적화:
+  - 버전 고정
+  - 보안 패키지
+  - 모니터링 도구
+</code></pre><h2>6. 문서 파일</h2><h3>6.1 루트 문서 (5개)</h3><table>
+<thead><tr>
+<th>파일</th>
+<th>크기</th>
+<th>내용</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>README_Enterprise.md</td>
+<td>중형</td>
+<td>엔터프라이즈 버전 소개</td>
+</tr>
+<tr>
+<td>deployment_guide.md</td>
+<td>중형</td>
+<td>배포 가이드</td>
+</tr>
+<tr>
+<td>hardware_requirements.md</td>
+<td>소형</td>
+<td>하드웨어 요구사항</td>
+</tr>
+<tr>
+<td>INTEGRATION_COMPLETE.md</td>
+<td>소형</td>
+<td>통합 완료 체크리스트</td>
+</tr>
+<tr>
+<td>project_summary.md</td>
+<td>중형</td>
+<td>프로젝트 요약</td>
+</tr>
+</tbody></table><h3>6.2 docs/ 디렉토리 문서</h3>
+<pre><code>docs/
+├── 01_프로젝트_개요.md
+├── 02_개발계획서.md
+├── 03_기술개발일지.md
+├── 05_사용자_가이드.md (작성 예정)
+├── 06_향후_개선계획.md (작성 예정)
+└── 04_완료보고서/
+    ├── 01_전체_요약.md
+    ├── 02_간단버전_분석.md
+    ├── 03_고도화버전_분석.md
+    ├── 04_비교분석표.md
+    ├── 05_파일구조_분석.md (본 문서)
+    ├── 06_코드_상세분석.md (작성 예정)
+    └── 07_문제해결_과정.md (작성 예정)
+</code></pre><h2>7. 디렉토리 구조 상세</h2><h3>7.1 config/ (설정 디렉토리)</h3>
+<pre><code>용도: 시스템 설정 파일
+파일 형식: YAML, JSON, ENV
+예상 파일:
+  - system_config.yml
+  - database_config.yml
+  - security_config.yml
+  - logging_config.yml
+</code></pre><h3>7.2 data/ (데이터 디렉토리)</h3>
+<pre><code>용도: 데이터 저장소
+하위 디렉토리:
+  - backups/: 백업 데이터
+파일:
+  - scada_system.db (SQLite 로컬 백업)
+  - sensor_history.json
+  - system_state.json
+</code></pre><h3>7.3 logs/ (로그 디렉토리)</h3>
+<pre><code>용도: 애플리케이션 로그
+하위 디렉토리:
+  - archive/: 로그 아카이브
+파일:
+  - application.log
+  - error.log
+  - access.log
+  - security.log
+  - audit.log</p><p>로그 로테이션:
+  - 일별 로테이션
+  - 7일 보관
+  - 압축 저장
+</code></pre><h3>7.4 reports/ (보고서 디렉토리)</h3>
+<pre><code>용도: 생성된 보고서
+파일 형식: PDF, HTML, Excel
+구조:
+  - daily/: 일일 보고서
+  - weekly/: 주간 보고서
+  - monthly/: 월간 보고서
+  - incident/: 사고 보고서
+  - compliance/: 규정 준수 보고서
+</code></pre><h3>7.5 templates/ (템플릿 디렉토리)</h3>
+<pre><code>용도: 보고서 템플릿
+파일 형식: HTML (Jinja2)
+예상 파일:
+  - daily_report.html
+  - weekly_report.html
+  - compliance_report.html
+  - incident_report.html
+</code></pre><h3>7.6 docs/ (문서 디렉토리)</h3>
+<pre><code>용도: 프로젝트 문서
+하위 디렉토리:
+  - 04_완료보고서/: 완료 보고서
+  - diagrams/: 아키텍처 다이어그램
+  - screenshots/: 스크린샷
+</code></pre><h3>7.7 venv/ (가상환경)</h3>
+<pre><code>용도: Python 가상환경
+구조:
+  - Scripts/ (Windows) 또는 bin/ (Linux)
+  - Lib/site-packages/: 설치된 패키지
+크기: 약 1.5GB (TensorFlow 포함)
+</code></pre><h2>8. 파일 명명 규칙</h2><h3>8.1 Python 파일</h3>
+<pre><code>규칙: snake_case
+패턴: {module_name}.py</p><p>예시:
+  - main_application.py (메인 애플리케이션)
+  - ml_analytics_engine.py (ML 분석 엔진)
+  - realtime_monitoring.py (실시간 모니터링)
+</code></pre><h3>8.2 설정 파일</h3>
+<pre><code>규칙: 소문자, 하이픈 또는 언더스코어
+패턴: {purpose}_{type}.{ext}</p><p>예시:
+  - requirements_production.txt
+  - docker-compose.yml
+  - system_config.yml
+</code></pre><h3>8.3 문서 파일</h3>
+<pre><code>규칙: 숫자 접두사 + 한글 + .md
+패턴: {번호}_{제목}.md</p><p>예시:
+  - 01_프로젝트_개요.md
+  - 02_개발계획서.md
+  - 03_기술개발일지.md
+</code></pre><h2>9. 코드 라인 수 분석</h2><h3>9.1 모듈별 코드 규모</h3><table>
+<thead><tr>
+<th>모듈 카테고리</th>
+<th>파일 수</th>
+<th>총 라인 수</th>
+<th>평균 라인 수</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>핵심 애플리케이션</td>
+<td>3개</td>
+<td>1,625줄</td>
+<td>542줄</td>
+</tr>
+<tr>
+<td>보안 모듈</td>
+<td>3개</td>
+<td>1,500줄</td>
+<td>500줄</td>
+</tr>
+<tr>
+<td>산업 프로토콜</td>
+<td>1개</td>
+<td>700줄</td>
+<td>700줄</td>
+</tr>
+<tr>
+<td>AI/ML 분석</td>
+<td>3개</td>
+<td>1,374줄</td>
+<td>458줄</td>
+</tr>
+<tr>
+<td>실시간 모니터링</td>
+<td>2개</td>
+<td>1,050줄</td>
+<td>525줄</td>
+</tr>
+<tr>
+<td>보고서 생성</td>
+<td>1개</td>
+<td>550줄</td>
+<td>550줄</td>
+</tr>
+<tr>
+<td>엔터프라이즈 통합</td>
+<td>1개</td>
+<td>700줄</td>
+<td>700줄</td>
+</tr>
+<tr>
+<td>데이터 파이프라인</td>
+<td>2개</td>
+<td>1,000줄</td>
+<td>500줄</td>
+</tr>
+<tr>
+<td>설정 및 배포</td>
+<td>3개</td>
+<td>900줄</td>
+<td>300줄</td>
+</tr>
+<tr>
+<td>유틸리티 및 테스트</td>
+<td>7개</td>
+<td>1,011줄</td>
+<td>144줄</td>
+</tr>
+<tr>
+<td><strong>총계</strong></td>
+<td><strong>26개</strong></td>
+<td><strong>10,410줄</strong></td>
+<td><strong>400줄</strong></td>
+</tr>
+</tbody></table><p>주: 총계는 메인 모듈만 포함 (테스트 데이터 생성 코드 제외)</p><h3>9.2 파일 크기 분포</h3><table>
+<thead><tr>
+<th>크기 범위</th>
+<th>파일 수</th>
+<th>비율</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>0-100줄</td>
+<td>3개</td>
+<td>11.5%</td>
+</tr>
+<tr>
+<td>101-200줄</td>
+<td>4개</td>
+<td>15.4%</td>
+</tr>
+<tr>
+<td>201-400줄</td>
+<td>7개</td>
+<td>26.9%</td>
+</tr>
+<tr>
+<td>401-600줄</td>
+<td>7개</td>
+<td>26.9%</td>
+</tr>
+<tr>
+<td>601-800줄</td>
+<td>4개</td>
+<td>15.4%</td>
+</tr>
+<tr>
+<td>801-1000줄</td>
+<td>1개</td>
+<td>3.8%</td>
+</tr>
+</tbody></table><h2>10. 의존성 관계 다이어그램</h2><h3>10.1 모듈 의존성</h3>
+<pre><code>main_application.py
+    ├── cybersecurity_framework.py
+    │   └── auth_manager.py
+    │   └── compliance_audit_system.py
+    │
+    ├── industrial_protocols.py
+    │   └── data_pipeline.py
+    │       └── database_manager.py
+    │
+    ├── realtime_monitoring.py
+    │   └── monitoring_alerting.py
+    │
+    ├── ml_analytics_engine.py
+    │   └── advanced_analytics.py
+    │   └── model_trainer.py
+    │
+    ├── professional_reporting.py
+    │
+    ├── enterprise_integration.py
+    │
+    └── config_manager.py
+        └── deployment_manager.py
+</code></pre><h3>10.2 계층별 의존성</h3><p><strong>레벨 0 (최상위)</strong>:
+- main_application.py
+- start_integrated_system.py</p><p><strong>레벨 1 (핵심 모듈)</strong>:
+- cybersecurity_framework.py
+- industrial_protocols.py
+- ml_analytics_engine.py
+- realtime_monitoring.py
+- enterprise_integration.py</p><p><strong>레벨 2 (지원 모듈)</strong>:
+- auth_manager.py
+- data_pipeline.py
+- professional_reporting.py
+- compliance_audit_system.py</p><p><strong>레벨 3 (유틸리티)</strong>:
+- database_manager.py
+- config_manager.py
+- monitoring_alerting.py
+- advanced_analytics.py</p><h2>11. 파일 접근 패턴</h2><h3>11.1 읽기 전용 파일</h3>
+<pre><code>- requirements*.txt
+- Dockerfile
+- docker-compose.yml
+- *.md (문서)
+- templates/*.html
+</code></pre><h3>11.2 읽기/쓰기 파일</h3>
+<pre><code>- logs/*.log
+- data/*.db
+- data/*.json
+- reports/*.pdf
+- reports/*.xlsx
+</code></pre><h3>11.3 설정 파일</h3>
+<pre><code>- config/*.yml
+- config/*.json
+- .env (환경 변수)
+</code></pre><h2>12. 디스크 사용량</h2><h3>12.1 예상 디스크 사용량</h3><table>
+<thead><tr>
+<th>디렉토리/파일</th>
+<th>크기</th>
+<th>비율</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>venv/</td>
+<td>~1.5GB</td>
+<td>75%</td>
+</tr>
+<tr>
+<td>Python 파일 (*.py)</td>
+<td>~1.5MB</td>
+<td>0.1%</td>
+</tr>
+<tr>
+<td>Docker 이미지</td>
+<td>~2.5GB</td>
+<td>-</td>
+</tr>
+<tr>
+<td>logs/</td>
+<td>~100MB</td>
+<td>5%</td>
+</tr>
+<tr>
+<td>data/</td>
+<td>~50MB</td>
+<td>2.5%</td>
+</tr>
+<tr>
+<td>reports/</td>
+<td>~50MB</td>
+<td>2.5%</td>
+</tr>
+<tr>
+<td>docs/</td>
+<td>~10MB</td>
+<td>0.5%</td>
+</tr>
+<tr>
+<td>기타</td>
+<td>~290MB</td>
+<td>14.4%</td>
+</tr>
+<tr>
+<td><strong>총계</strong></td>
+<td><strong>~2GB</strong></td>
+<td><strong>100%</strong></td>
+</tr>
+</tbody></table><p>주: Docker 이미지는 별도 계산</p><h3>12.2 예상 증가율</h3><table>
+<thead><tr>
+<th>항목</th>
+<th>일일 증가</th>
+<th>월간 증가</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>logs/</td>
+<td>~10MB</td>
+<td>~300MB</td>
+</tr>
+<tr>
+<td>data/</td>
+<td>~5MB</td>
+<td>~150MB</td>
+</tr>
+<tr>
+<td>reports/</td>
+<td>~2MB</td>
+<td>~60MB</td>
+</tr>
+<tr>
+<td><strong>총계</strong></td>
+<td>~17MB</td>
+<td>~510MB</td>
+</tr>
+</tbody></table><h2>13. 백업 전략</h2><h3>13.1 백업 대상</h3><p><strong>중요도 높음</strong> (일일 백업):
+- data/scada_system.db
+- config/*.yml
+- logs/*.log (최근 7일)</p><p><strong>중요도 중간</strong> (주간 백업):
+- reports/
+- templates/</p><p><strong>중요도 낮음</strong> (백업 불필요):
+- venv/ (재생성 가능)
+- Python 소스 (Git 관리)</p><h3>13.2 백업 위치</h3>
+<pre><code>data/backups/
+├── daily/
+│   ├── 2025-10-13/
+│   ├── 2025-10-14/
+│   └── ...
+├── weekly/
+│   ├── 2025-W41/
+│   └── ...
+└── monthly/
+    ├── 2025-10/
+    └── ...
+</code></pre><h2>14. 보안 고려사항</h2><h3>14.1 민감한 파일</h3>
+<pre><code>보호 필요:
+  - .env (환경 변수)
+  - config/*_secrets.yml
+  - data/*.db
+  - logs/audit.log</p><p>접근 제한:
+  - chmod 600 .env
+  - chmod 600 config/*_secrets.yml
+  - chmod 640 logs/*.log
+</code></pre><h3>14.2 Git 제외 파일 (.gitignore)</h3>
+<pre><code># 환경
+.env
+venv/
+__pycache__/</p><h1>데이터</h1>
+data/*.db
+*.sqlite</p><h1>로그</h1>
+logs/*.log</p><h1>보고서</h1>
+reports/</p><h1>임시 파일</h1>
+*.pyc
+*.pyo
+*.tmp
+</code></pre><h2>15. 파일 시스템 권장 사항</h2><h3>15.1 디렉토리 권한</h3>
+<pre><code>config/:     750 (rwxr-x---)
+data/:       750 (rwxr-x---)
+logs/:       755 (rwxr-xr-x)
+reports/:    755 (rwxr-xr-x)
+templates/:  755 (rwxr-xr-x)
+</code></pre><h3>15.2 파일 권한</h3>
+<pre><code>*.py:        644 (rw-r--r--)
+*.yml:       644 (rw-r--r--)
+*.sh:        755 (rwxr-xr-x)
+.env:        600 (rw-------)
+*.log:       640 (rw-r-----)
+</code></pre><h2>16. 요약</h2><h3>16.1 파일 시스템 개요</h3><table>
+<thead><tr>
+<th>항목</th>
+<th>수량/크기</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>총 Python 파일</td>
+<td>26개</td>
+</tr>
+<tr>
+<td>총 코드 라인 수</td>
+<td>~14,245줄</td>
+</tr>
+<tr>
+<td>총 디렉토리</td>
+<td>12개</td>
+</tr>
+<tr>
+<td>총 설정 파일</td>
+<td>9개</td>
+</tr>
+<tr>
+<td>총 문서 파일</td>
+<td>15개</td>
+</tr>
+<tr>
+<td>디스크 사용 (코드)</td>
+<td>~2MB</td>
+</tr>
+<tr>
+<td>디스크 사용 (전체)</td>
+<td>~2GB</td>
+</tr>
+</tbody></table><h3>16.2 주요 특징</h3><p>1. <strong>모듈식 구조</strong>: 26개 독립 모듈로 구성
+2. <strong>계층적 아키텍처</strong>: 4단계 의존성 계층
+3. <strong>명확한 분리</strong>: 기능별 디렉토리 분리
+4. <strong>표준 규칙</strong>: 일관된 명명 규칙
+5. <strong>확장 가능</strong>: 새 모듈 추가 용이
+6. <strong>유지보수성</strong>: 평균 400줄/파일로 관리 용이
+7. <strong>문서화</strong>: 15개 문서 파일</p><h3>16.3 파일 구조의 강점</h3><p>1. 명확한 역할 분담
+2. 낮은 결합도
+3. 높은 응집도
+4. 쉬운 테스트
+5. 독립적 배포
+6. 점진적 확장
+7. 효율적 백업</p><hr></p><p><strong>문서 버전</strong>: 1.0
+<strong>작성일</strong>: 2025년 10월 14일
+<strong>파일 경로</strong>: <code>C:\새 폴더\scada_ai_project\docs\04_완료보고서\05_파일구조_분석.md</code>
+</p>
+    </div>
+</body>
+</html>

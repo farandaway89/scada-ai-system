@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>06_향후_개선계획</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+            font-size: 2em;
+        }
+        h3 {
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        h4 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            color: #ecf0f1;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        tr:hover {
+            background: #f0f0f0;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #555;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        .toc {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .toc h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            pre {
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>향후 개선계획</h1><h2>1. 개요</h2><p>본 문서는 SCADA AI 시스템의 향후 개선 및 확장 계획을 제시합니다.</p><h3>1.1 현재 시스템 현황</h3><p><strong>달성한 목표</strong>:
+- 실시간 모니터링 시스템 구축
+- AI/ML 기반 예측 분석
+- 엔터프라이즈 보안 프레임워크
+- 규정 준수 자동화
+- Docker 기반 배포</p><p><strong>제한사항</strong>:
+- 실제 산업 하드웨어 미연동 (시뮬레이션 데이터)
+- 웹 UI 제한적 (Swagger UI만)
+- 단일 인스턴스 배포
+- 선택적 패키지 미설치 (RabbitMQ, Kafka, Cloud)</p><h2>2. 단기 개선 계획 (1-3개월)</h2><h3>2.1 웹 UI 개발 (우선순위: 높음)</h3><p><strong>목표</strong>:
+- 전문적인 대시보드 UI 구축
+- 실시간 데이터 시각화
+- 사용자 친화적 인터페이스</p><p><strong>기술 스택</strong>:
+- React 18 또는 Vue 3
+- TypeScript
+- Chart.js 또는 D3.js (데이터 시각화)
+- Tailwind CSS (스타일링)
+- WebSocket 클라이언트</p><p><strong>주요 화면</strong>:</p><p>1. <strong>메인 대시보드</strong>
+   - 5개 센서 실시간 데이터
+   - 라인 차트 (시간별 추이)
+   - 게이지 차트 (현재 값)
+   - 알람 목록</p><p>2. <strong>분석 화면</strong>
+   - AI 예측 결과
+   - 이상 탐지 결과
+   - 패턴 분석</p><p>3. <strong>보고서 화면</strong>
+   - 보고서 생성 폼
+   - 보고서 목록
+   - 다운로드 기능</p><p>4. <strong>설정 화면</strong>
+   - 시스템 설정
+   - 사용자 관리
+   - 알람 규칙 설정</p><p><strong>구현 계획</strong>:
+<pre><code>주차 1-2: 프로젝트 설정 및 기본 레이아웃
+주차 3-4: 메인 대시보드 개발
+주차 5-6: 분석 및 보고서 화면
+주차 7-8: 설정 화면 및 통합 테스트
+</code></pre><p><strong>예상 소요 시간</strong>: 2개월</p><h3>2.2 실시간 알림 시스템 (우선순위: 중간)</h3><p><strong>목표</strong>:
+- 이메일 알림
+- SMS 알림 (선택)
+- Slack/Teams 통합</p><p><strong>구현 내역</strong>:</p><p>1. <strong>이메일 알림</strong>:
+<pre><code># notification_manager.py
+import smtplib
+from email.mime.text import MIMEText</p><p>class EmailNotifier:
+    def send_alert(self, alert):
+        msg = MIMEText(alert.message)
+        msg['Subject'] = f'SCADA Alert: {alert.priority}'
+        msg['From'] = 'scada@company.com'
+        msg['To'] = 'admin@company.com'</p><p>        smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp.starttls()
+        smtp.login('user', 'password')
+        smtp.send_message(msg)
+        smtp.quit()
+</code></pre><p>2. <strong>Slack 통합</strong>:
+<pre><code>import requests</p><p>class SlackNotifier:
+    def send_alert(self, alert):
+        webhook_url = os.getenv('SLACK_WEBHOOK_URL')
+        payload = {
+            'text': f'<em>{alert.priority}</em>: {alert.message}',
+            'channel': '#scada-alerts'
+        }
+        requests.post(webhook_url, json=payload)
+</code></pre><p><strong>예상 소요 시간</strong>: 2주</p><h3>2.3 모바일 앱 프로토타입 (우선순위: 낮음)</h3><p><strong>목표</strong>:
+- 스마트폰에서 실시간 모니터링
+- 알람 푸시 알림</p><p><strong>기술 스택</strong>:
+- React Native 또는 Flutter
+- WebSocket 클라이언트
+- 푸시 알림 (Firebase Cloud Messaging)</p><p><strong>주요 기능</strong>:
+- 실시간 센서 데이터 조회
+- 알람 목록 및 확인
+- 시스템 상태 확인</p><p><strong>예상 소요 시간</strong>: 1개월</p><h2>3. 중기 개선 계획 (3-6개월)</h2><h3>3.1 메시지 큐 통합 (우선순위: 높음)</h3><p><strong>목표</strong>:
+- 대용량 데이터 처리
+- 시스템 간 비동기 통신
+- 장애 복구 (Fault Tolerance)</p><h4>RabbitMQ 통합</h4><p><strong>설치</strong>:
+<pre><code># docker-compose.yml
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=scada
+      - RABBITMQ_DEFAULT_PASS=scada123
+</code></pre><p><strong>구현</strong>:
+<pre><code># message_queue.py
+import pika</p><p>class MessageQueue:
+    def __init__(self):
+        connection = pika.BlockingConnection(
+            pika.ConnectionParameters('rabbitmq')
+        )
+        self.channel = connection.channel()
+        self.channel.queue_declare(queue='sensor_data')</p><p>    def publish(self, message):
+        self.channel.basic_publish(
+            exchange='',
+            routing_key='sensor_data',
+            body=json.dumps(message)
+        )</p><p>    def consume(self, callback):
+        self.channel.basic_consume(
+            queue='sensor_data',
+            on_message_callback=callback,
+            auto_ack=True
+        )
+        self.channel.start_consuming()
+</code></pre><p><strong>예상 소요 시간</strong>: 2주</p><h4>Apache Kafka 통합</h4><p><strong>설치</strong>:
+<pre><code># docker-compose.yml
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181</p><p>  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+</code></pre><p><strong>구현</strong>:
+<pre><code># kafka_client.py
+from kafka import KafkaProducer, KafkaConsumer</p><p>class KafkaClient:
+    def __init__(self):
+        self.producer = KafkaProducer(
+            bootstrap_servers=['kafka:9092'],
+            value_serializer=lambda v: json.dumps(v).encode('utf-8')
+        )</p><p>    def send(self, topic, message):
+        self.producer.send(topic, message)</p><p>    def consume(self, topic, callback):
+        consumer = KafkaConsumer(
+            topic,
+            bootstrap_servers=['kafka:9092'],
+            value_deserializer=lambda m: json.loads(m.decode('utf-8'))
+        )
+        for message in consumer:
+            callback(message.value)
+</code></pre><p><strong>예상 소요 시간</strong>: 3주</p><h3>3.2 클라우드 연동 (우선순위: 중간)</h3><p><strong>목표</strong>:
+- 클라우드 기반 확장
+- IoT Hub 연동
+- 데이터 백업 및 분석</p><h4>Azure IoT Hub</h4><p><strong>구현</strong>:
+<pre><code># azure_client.py
+from azure.iot.device import IoTHubDeviceClient, Message</p><p>class AzureIoTClient:
+    def __init__(self, connection_string):
+        self.client = IoTHubDeviceClient.create_from_connection_string(
+            connection_string
+        )</p><p>    async def send_telemetry(self, sensor_data):
+        message = Message(json.dumps(sensor_data))
+        message.content_type = "application/json"
+        message.content_encoding = "utf-8"
+        await self.client.send_message(message)
+</code></pre><p><strong>Azure 서비스 활용</strong>:
+- Azure IoT Hub: 디바이스 연결
+- Azure Time Series Insights: 시계열 데이터 분석
+- Azure Machine Learning: 고급 AI 모델
+- Azure Cosmos DB: 글로벌 데이터 복제</p><p><strong>예상 비용</strong>:
+- IoT Hub: $25/월 (Basic Tier)
+- Time Series Insights: $150/월
+- Machine Learning: 사용량 기반
+- Cosmos DB: $25/월</p><p><strong>예상 소요 시간</strong>: 1개월</p><h4>Google Cloud Platform</h4><p><strong>구현</strong>:
+<pre><code># gcp_client.py
+from google.cloud import iot_v1
+from google.cloud import pubsub_v1</p><p>class GCPIoTClient:
+    def __init__(self, project_id):
+        self.project_id = project_id
+        self.publisher = pubsub_v1.PublisherClient()</p><p>    def publish_telemetry(self, topic, data):
+        topic_path = self.publisher.topic_path(self.project_id, topic)
+        self.publisher.publish(
+            topic_path,
+            json.dumps(data).encode('utf-8')
+        )
+</code></pre><p><strong>GCP 서비스 활용</strong>:
+- Cloud IoT Core: 디바이스 관리
+- Pub/Sub: 메시지 큐
+- BigQuery: 데이터 웨어하우스
+- AI Platform: ML 모델 배포</p><p><strong>예상 소요 시간</strong>: 1개월</p><h3>3.3 Kubernetes 배포 (우선순위: 높음)</h3><p><strong>목표</strong>:
+- 고가용성 (HA)
+- 자동 확장 (Auto Scaling)
+- 롤링 업데이트</p><p><strong>Kubernetes 매니페스트</strong>:</p><pre><code># deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scada-ai
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: scada-ai
+  template:
+    metadata:
+      labels:
+        app: scada-ai
+    spec:
+      containers:
+      - name: scada-ai
+        image: scada-ai:2.0.0
+        ports:
+        - containerPort: 9000
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: scada-secrets
+              key: database-url
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1000m"
+          limits:
+            memory: "4Gi"
+            cpu: "2000m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+<hr>
+apiVersion: v1
+kind: Service
+metadata:
+  name: scada-ai-service
+spec:
+  selector:
+    app: scada-ai
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9000
+  type: LoadBalancer
+<hr>
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: scada-ai-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: scada-ai
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80
+</code></pre><p><strong>Helm Chart 구성</strong>:
+<pre><code># Chart.yaml
+apiVersion: v2
+name: scada-ai
+version: 2.0.0
+appVersion: 2.0.0
+description: SCADA AI Enterprise System
+</code></pre><p><strong>예상 소요 시간</strong>: 2개월</p><h2>4. 장기 개선 계획 (6-12개월)</h2><h3>4.1 고급 AI 모델 (우선순위: 중간)</h3><p><strong>목표</strong>:
+- 더 정확한 예측
+- 다양한 AI 기술 적용
+- 설명 가능한 AI (Explainable AI)</p><h4>GPT 통합 (자연어 분석)</h4><p><strong>구현</strong>:
+<pre><code># gpt_analyzer.py
+import openai</p><p>class GPTAnalyzer:
+    def __init__(self, api_key):
+        openai.api_key = api_key</p><p>    async def analyze_data(self, sensor_data):
+        prompt = f"""
+        다음 센서 데이터를 분석하고 인사이트를 제공하세요:
+        {json.dumps(sensor_data, indent=2)}</p><p>        다음을 포함해주세요:
+        1. 이상 징후
+        2. 예상 문제
+        3. 권장 조치
+        """</p><p>        response = await openai.ChatCompletion.acreate(
+            model="gpt-4",
+            messages=[{"role": "user", "content": prompt}]
+        )</p><p>        return response.choices[0].message.content
+</code></pre><p><strong>활용 사례</strong>:
+- 센서 데이터 자연어 해석
+- 보고서 자동 요약
+- 장애 원인 분석
+- 챗봇 기반 시스템 제어</p><p><strong>예상 비용</strong>:
+- GPT-4: $0.03/1K tokens (약 $30-100/월)</p><p><strong>예상 소요 시간</strong>: 1개월</p><h4>강화학습 (최적화)</h4><p><strong>목표</strong>:
+- 시스템 운영 최적화
+- 에너지 효율 개선
+- 예측 정비 최적화</p><p><strong>구현</strong>:
+<pre><code># rl_optimizer.py
+import gym
+import numpy as np
+from stable_baselines3 import PPO</p><p>class SCADAEnvironment(gym.Env):
+    def __init__(self):
+        super().__init__()
+        self.action_space = gym.spaces.Discrete(5)  # 5가지 조치
+        self.observation_space = gym.spaces.Box(
+            low=-np.inf,
+            high=np.inf,
+            shape=(10,),  # 10개 센서
+            dtype=np.float32
+        )</p><p>    def step(self, action):
+        # 액션 실행 및 보상 계산
+        reward = self._calculate_reward(action)
+        observation = self._get_observation()
+        done = False
+        info = {}
+        return observation, reward, done, info</p><p>    def _calculate_reward(self, action):
+        # 에너지 효율, 품질, 비용을 고려한 보상
+        energy_cost = -self.energy_usage * 0.1
+        quality_bonus = self.output_quality * 10
+        maintenance_cost = -self.maintenance_freq * 5
+        return energy_cost + quality_bonus + maintenance_cost</p><h1>학습</h1>
+env = SCADAEnvironment()
+model = PPO("MlpPolicy", env, verbose=1)
+model.learn(total_timesteps=100000)
+</code></pre><p><strong>예상 소요 시간</strong>: 2개월</p><h3>4.2 실제 산업 하드웨어 연동 (우선순위: 높음)</h3><p><strong>목표</strong>:
+- 실제 PLC 연동
+- 센서 실시간 데이터 수집
+- 산업 현장 배포</p><p><strong>지원 하드웨어</strong>:</p><p>1. <strong>Siemens PLC</strong>
+   - S7-1200, S7-1500 시리즈
+   - Snap7 라이브러리 사용</p><p>2. <strong>Allen-Bradley PLC</strong>
+   - CompactLogix, ControlLogix
+   - pycomm3 라이브러리</p><p>3. <strong>산업용 센서</strong>
+   - 온도 센서: PT100, Thermocouple
+   - 압력 센서: 4-20mA 출력
+   - 유량 센서: 펄스 출력</p><p><strong>구현 예시</strong>:
+<pre><code># plc_connector.py
+import snap7</p><p>class SiemensPLCConnector:
+    def __init__(self, ip_address):
+        self.client = snap7.client.Client()
+        self.client.connect(ip_address, 0, 1)</p><p>    def read_data(self, db_number, start, size):
+        data = self.client.db_read(db_number, start, size)
+        return snap7.util.get_real(data, 0)</p><p>    def write_data(self, db_number, start, value):
+        data = bytearray(4)
+        snap7.util.set_real(data, 0, value)
+        self.client.db_write(db_number, start, data)
+</code></pre><p><strong>현장 테스트 계획</strong>:
+1. 개발 환경 테스트 (시뮬레이터)
+2. 실험실 환경 테스트 (테스트 PLC)
+3. 파일럿 배포 (소규모 현장)
+4. 전체 배포</p><p><strong>예상 소요 시간</strong>: 3개월</p><h3>4.3 다국어 지원 (우선순위: 낮음)</h3><p><strong>목표</strong>:
+- 글로벌 배포
+- 다국어 UI
+- 현지화</p><p><strong>지원 언어</strong>:
+- 영어 (English)
+- 한국어 (Korean)
+- 일본어 (Japanese)
+- 중국어 (Chinese)</p><p><strong>구현</strong>:
+<pre><code># i18n.py
+translations = {
+    'en': {
+        'dashboard': 'Dashboard',
+        'sensors': 'Sensors',
+        'alerts': 'Alerts'
+    },
+    'ko': {
+        'dashboard': '대시보드',
+        'sensors': '센서',
+        'alerts': '알람'
+    },
+    'ja': {
+        'dashboard': 'ダッシュボード',
+        'sensors': 'センサー',
+        'alerts': 'アラート'
+    }
+}</p><p>def get_text(key, language='en'):
+    return translations.get(language, {}).get(key, key)
+</code></pre><p><strong>예상 소요 시간</strong>: 1개월</p><h3>4.4 엣지 컴퓨팅 (우선순위: 중간)</h3><p><strong>목표</strong>:
+- 현장 데이터 처리
+- 지연 시간 최소화
+- 네트워크 대역폭 절약</p><p><strong>아키텍처</strong>:
+<pre><code>[센서] → [Edge Device] → [Cloud SCADA]
+           ↓
+       [로컬 AI 처리]
+       [임계 알람]
+       [데이터 필터링]
+</code></pre><p><strong>Edge Device 구성</strong>:
+- Raspberry Pi 4 또는 산업용 PC
+- Docker 기반 경량 컨테이너
+- 로컬 ML 모델 (TensorFlow Lite)
+- 제한된 저장소 (Redis only)</p><p><strong>구현</strong>:
+<pre><code># edge_agent.py
+class EdgeAgent:
+    def __init__(self):
+        self.local_model = self._load_lite_model()
+        self.buffer = []</p><p>    def process_sensor_data(self, data):
+        # 로컬 AI 처리
+        prediction = self.local_model.predict(data)</p><p>        # 임계값 확인
+        if prediction > THRESHOLD:
+            self._send_alert()</p><p>        # 데이터 버퍼링 (배치 전송)
+        self.buffer.append(data)
+        if len(self.buffer) >= 100:
+            self._send_to_cloud(self.buffer)
+            self.buffer = []
+</code></pre><p><strong>예상 비용</strong>:
+- Edge Device: $100-500/대
+- 유지보수: $20/월/대</p><p><strong>예상 소요 시간</strong>: 2개월</p><h2>5. 기술 부채 해결</h2><h3>5.1 코드 품질 개선</h3><p><strong>목표</strong>:
+- 테스트 커버리지 80% 이상
+- 코드 리팩토링
+- 문서화 강화</p><p><strong>작업 항목</strong>:</p><p>1. <strong>단위 테스트 작성</strong>
+<pre><code># tests/test_monitoring.py
+import pytest
+from realtime_monitoring import RealTimeMonitoringSystem</p><p>def test_alert_threshold():
+    system = RealTimeMonitoringSystem()
+    alert = system.check_alerts(value=100, threshold=50)
+    assert alert is not None
+    assert alert.priority == "HIGH"
+</code></pre><p>2. <strong>통합 테스트</strong>
+<pre><code># tests/test_integration.py
+@pytest.mark.asyncio
+async def test_full_pipeline():
+    # 센서 데이터 → 파이프라인 → 데이터베이스 → API
+    data = {"sensor_id": "temp_001", "value": 22.5}
+    await pipeline.process(data)
+    result = await api.get_sensor_data("temp_001")
+    assert result['value'] == 22.5
+</code></pre><p>3. <strong>Type Checking (mypy)</strong>
+<pre><code># 전체 코드베이스 타입 체크
+mypy --strict *.py
+</code></pre><p><strong>예상 소요 시간</strong>: 1개월</p><h3>5.2 성능 최적화</h3><p><strong>목표</strong>:
+- API 응답 시간 50% 단축
+- 데이터베이스 쿼리 최적화
+- 캐싱 전략 개선</p><p><strong>최적화 항목</strong>:</p><p>1. <strong>데이터베이스 인덱스</strong>:
+<pre><code>-- 복합 인덱스 생성
+CREATE INDEX idx_sensor_time_compound
+ON sensor_data(sensor_id, timestamp DESC);</p><p>-- 부분 인덱스
+CREATE INDEX idx_recent_data
+ON sensor_data(timestamp)
+WHERE timestamp > NOW() - INTERVAL '7 days';
+</code></pre><p>2. <strong>쿼리 최적화</strong>:
+<pre><code># Before (N+1 쿼리)
+sensors = await db.query("SELECT * FROM sensors")
+for sensor in sensors:
+    data = await db.query(f"SELECT * FROM sensor_data WHERE sensor_id={sensor.id}")</p><h1>After (JOIN)</h1>
+result = await db.query("""
+    SELECT s.<em>, sd.</em>
+    FROM sensors s
+    LEFT JOIN sensor_data sd ON s.id = sd.sensor_id
+    WHERE sd.timestamp > NOW() - INTERVAL '1 hour'
+""")
+</code></pre><p>3. <strong>Redis 캐싱 전략</strong>:
+<pre><code># 계층적 캐싱
+@cache(ttl=60)  # 1분 캐시
+async def get_current_data():
+    return await db.query("SELECT * FROM sensor_data ORDER BY timestamp DESC LIMIT 5")</p><p>@cache(ttl=300)  # 5분 캐시
+async def get_hourly_average():
+    return await db.query("SELECT AVG(value) FROM sensor_data GROUP BY HOUR(timestamp)")
+</code></pre><p><strong>예상 소요 시간</strong>: 2주</p><h3>5.3 보안 강화</h3><p><strong>목표</strong>:
+- 취약점 제거
+- 보안 감사 통과
+- 침투 테스트</p><p><strong>보안 개선 항목</strong>:</p><p>1. <strong>비밀번호 정책</strong>:
+<pre><code># password_policy.py
+import re</p><p>def validate_password(password):
+    # 최소 12자, 대소문자, 숫자, 특수문자
+    if len(password) < 12:
+        return False
+    if not re.search(r'[A-Z]', password):
+        return False
+    if not re.search(r'[a-z]', password):
+        return False
+    if not re.search(r'[0-9]', password):
+        return False
+    if not re.search(r'[!@#$%^&*]', password):
+        return False
+    return True
+</code></pre><p>2. <strong>Rate Limiting</strong>:
+<pre><code># rate_limiter.py
+from slowapi import Limiter</p><p>limiter = Limiter(key_func=get_remote_address)</p><p>@app.get("/api/data")
+@limiter.limit("100/minute")
+async def get_data():
+    return data
+</code></pre><p>3. <strong>SQL Injection 방어</strong>:
+<pre><code># 파라미터화된 쿼리만 사용
+<h1>Bad</h1>
+query = f"SELECT * FROM users WHERE username='{username}'"</p><h1>Good</h1>
+query = "SELECT * FROM users WHERE username=?"
+result = await db.execute(query, (username,))
+</code></pre><p><strong>예상 소요 시간</strong>: 2주</p><h2>6. 우선순위 매트릭스</h2><table>
+<thead><tr>
+<th>개선 항목</th>
+<th>우선순위</th>
+<th>예상 시간</th>
+<th>예상 비용</th>
+<th>ROI</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>웹 UI 개발</td>
+<td>높음</td>
+<td>2개월</td>
+<td>$10K</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>Kubernetes 배포</td>
+<td>높음</td>
+<td>2개월</td>
+<td>$5K</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>메시지 큐 통합</td>
+<td>높음</td>
+<td>1개월</td>
+<td>$2K</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>실제 하드웨어 연동</td>
+<td>높음</td>
+<td>3개월</td>
+<td>$20K</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>실시간 알림</td>
+<td>중간</td>
+<td>2주</td>
+<td>$1K</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>클라우드 연동</td>
+<td>중간</td>
+<td>1개월</td>
+<td>$3K</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>고급 AI 모델</td>
+<td>중간</td>
+<td>3개월</td>
+<td>$5K</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>엣지 컴퓨팅</td>
+<td>중간</td>
+<td>2개월</td>
+<td>$10K</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>모바일 앱</td>
+<td>낮음</td>
+<td>1개월</td>
+<td>$8K</td>
+<td>낮음</td>
+</tr>
+<tr>
+<td>다국어 지원</td>
+<td>낮음</td>
+<td>1개월</td>
+<td>$3K</td>
+<td>낮음</td>
+</tr>
+<tr>
+<td>코드 품질</td>
+<td>높음</td>
+<td>1개월</td>
+<td>$5K</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>성능 최적화</td>
+<td>중간</td>
+<td>2주</td>
+<td>$2K</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>보안 강화</td>
+<td>높음</td>
+<td>2주</td>
+<td>$2K</td>
+<td>높음</td>
+</tr>
+</tbody></table><h2>7. 로드맵</h2><h3>7.1 타임라인</h3><pre><code>2025 Q4 (현재)
+├── 시스템 완성 및 문서화 ✓
+└── 안정화 및 버그 수정</p><p>2026 Q1 (1-3개월)
+├── 웹 UI 개발 (2개월)
+├── 실시간 알림 시스템 (2주)
+├── 모바일 앱 프로토타입 (1개월)
+├── 코드 품질 개선 (1개월)
+├── 성능 최적화 (2주)
+└── 보안 강화 (2주)</p><p>2026 Q2 (3-6개월)
+├── RabbitMQ 통합 (2주)
+├── Kafka 통합 (3주)
+├── Azure IoT Hub 연동 (1개월)
+├── GCP 연동 (1개월)
+└── Kubernetes 배포 (2개월)</p><p>2026 Q3-Q4 (6-12개월)
+├── GPT 통합 (1개월)
+├── 강화학습 최적화 (2개월)
+├── 실제 하드웨어 연동 (3개월)
+├── 다국어 지원 (1개월)
+└── 엣지 컴퓨팅 (2개월)
+</code></pre><h3>7.2 마일스톤</h3><p><strong>Milestone 1: 사용자 인터페이스 완성</strong> (2026년 3월)
+- 웹 UI v1.0 출시
+- 모바일 앱 베타 출시
+- 사용자 피드백 수집</p><p><strong>Milestone 2: 엔터프라이즈 확장성</strong> (2026년 6월)
+- Kubernetes 배포 완료
+- 메시지 큐 통합 완료
+- 클라우드 연동 완료</p><p><strong>Milestone 3: AI 고도화</strong> (2026년 9월)
+- GPT 통합 완료
+- 강화학습 최적화 완료
+- AI 성능 30% 향상</p><p><strong>Milestone 4: 산업 현장 배포</strong> (2026년 12월)
+- 실제 하드웨어 연동 완료
+- 파일럿 사이트 배포
+- 엣지 컴퓨팅 도입</p><h2>8. 예산 계획</h2><h3>8.1 개발 비용</h3><table>
+<thead><tr>
+<th>항목</th>
+<th>예상 비용</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>웹 UI 개발</td>
+<td>$10,000</td>
+</tr>
+<tr>
+<td>모바일 앱 개발</td>
+<td>$8,000</td>
+</tr>
+<tr>
+<td>Kubernetes 인프라</td>
+<td>$5,000</td>
+</tr>
+<tr>
+<td>클라우드 서비스 (1년)</td>
+<td>$3,000</td>
+</tr>
+<tr>
+<td>실제 하드웨어 테스트</td>
+<td>$20,000</td>
+</tr>
+<tr>
+<td>AI 모델 개발</td>
+<td>$5,000</td>
+</tr>
+<tr>
+<td>엣지 디바이스</td>
+<td>$10,000</td>
+</tr>
+<tr>
+<td>코드 품질 및 보안</td>
+<td>$7,000</td>
+</tr>
+<tr>
+<td><strong>총계</strong></td>
+<td><strong>$68,000</strong></td>
+</tr>
+</tbody></table><h3>8.2 운영 비용 (월간)</h3><table>
+<thead><tr>
+<th>항목</th>
+<th>예상 비용</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>클라우드 인프라</td>
+<td>$500</td>
+</tr>
+<tr>
+<td>GPT API</td>
+<td>$50</td>
+</tr>
+<tr>
+<td>모니터링 도구</td>
+<td>$100</td>
+</tr>
+<tr>
+<td>SSL 인증서</td>
+<td>$10</td>
+</tr>
+<tr>
+<td>백업 스토리지</td>
+<td>$50</td>
+</tr>
+<tr>
+<td><strong>총계</strong></td>
+<td><strong>$710/월</strong></td>
+</tr>
+</tbody></table><h2>9. 리스크 관리</h2><h3>9.1 기술 리스크</h3><table>
+<thead><tr>
+<th>리스크</th>
+<th>확률</th>
+<th>영향도</th>
+<th>대응 방안</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>하드웨어 호환성 문제</td>
+<td>중간</td>
+<td>높음</td>
+<td>다양한 프로토콜 지원, 테스트 강화</td>
+</tr>
+<tr>
+<td>클라우드 비용 증가</td>
+<td>높음</td>
+<td>중간</td>
+<td>비용 모니터링, 최적화</td>
+</tr>
+<tr>
+<td>AI 모델 성능 부족</td>
+<td>낮음</td>
+<td>중간</td>
+<td>지속적 학습, 하이퍼파라미터 튜닝</td>
+</tr>
+<tr>
+<td>보안 취약점</td>
+<td>중간</td>
+<td>높음</td>
+<td>정기 감사, 침투 테스트</td>
+</tr>
+</tbody></table><h3>9.2 사업 리스크</h3><table>
+<thead><tr>
+<th>리스크</th>
+<th>확률</th>
+<th>영향도</th>
+<th>대응 방안</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>시장 수요 부족</td>
+<td>낮음</td>
+<td>높음</td>
+<td>시장 조사, 파일럿 프로젝트</td>
+</tr>
+<tr>
+<td>경쟁사 출현</td>
+<td>중간</td>
+<td>중간</td>
+<td>차별화 전략, 빠른 개발</td>
+</tr>
+<tr>
+<td>규제 변경</td>
+<td>낮음</td>
+<td>높음</td>
+<td>규정 모니터링, 유연한 아키텍처</td>
+</tr>
+</tbody></table><h2>10. 성공 지표 (KPI)</h2><h3>10.1 기술 지표</h3><table>
+<thead><tr>
+<th>지표</th>
+<th>현재</th>
+<th>목표 (1년 후)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>API 응답 시간</td>
+<td>50ms</td>
+<td>25ms</td>
+</tr>
+<tr>
+<td>시스템 가동률</td>
+<td>99%</td>
+<td>99.9%</td>
+</tr>
+<tr>
+<td>테스트 커버리지</td>
+<td>0%</td>
+<td>80%</td>
+</tr>
+<tr>
+<td>보안 취약점</td>
+<td>미확인</td>
+<td>0개 (critical)</td>
+</tr>
+<tr>
+<td>동시 접속자 수</td>
+<td>10</td>
+<td>1,000</td>
+</tr>
+</tbody></table><h3>10.2 사업 지표</h3><table>
+<thead><tr>
+<th>지표</th>
+<th>현재</th>
+<th>목표 (1년 후)</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>활성 사용자 수</td>
+<td>1</td>
+<td>50</td>
+</tr>
+<tr>
+<td>고객 만족도</td>
+<td>-</td>
+<td>90%</td>
+</tr>
+<tr>
+<td>배포 사이트 수</td>
+<td>0</td>
+<td>10</td>
+</tr>
+<tr>
+<td>매출</td>
+<td>$0</td>
+<td>$100K</td>
+</tr>
+</tbody></table><h2>11. 결론</h2><h3>11.1 요약</h3><p>SCADA AI 시스템은 현재 기본 기능을 갖춘 엔터프라이즈급 시스템으로 완성되었습니다. 향후 개선을 통해:</p><p>1. <strong>사용자 경험 향상</strong>: 웹 UI, 모바일 앱
+2. <strong>확장성 강화</strong>: Kubernetes, 메시지 큐, 클라우드
+3. <strong>AI 고도화</strong>: GPT, 강화학습, 엣지 AI
+4. <strong>산업 현장 배포</strong>: 실제 하드웨어, 파일럿 프로젝트
+5. <strong>품질 향상</strong>: 테스트, 성능, 보안</p><p>이를 통해 글로벌 산업 자동화 시장에서 경쟁력 있는 제품으로 발전할 것입니다.</p><h3>11.2 다음 단계</h3><p><strong>즉시 착수</strong>:
+1. 웹 UI 개발 시작
+2. 코드 품질 개선 (테스트 작성)
+3. 보안 강화</p><p><strong>1개월 내</strong>:
+4. 실시간 알림 시스템
+5. 성능 최적화</p><p><strong>3개월 내</strong>:
+6. Kubernetes 배포
+7. 메시지 큐 통합
+8. 클라우드 연동</p><p><strong>1년 내</strong>:
+9. 실제 하드웨어 연동
+10. 파일럿 사이트 배포</p><hr></p><p><strong>문서 버전</strong>: 1.0
+<strong>작성일</strong>: 2025년 10월 14일
+<strong>문서 경로</strong>: <code>C:\새 폴더\scada_ai_project\docs\06_향후_개선계획.md</code>
+</p>
+    </div>
+</body>
+</html>

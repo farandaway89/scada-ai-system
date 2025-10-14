@@ -1,0 +1,78 @@
+analytics:
+  anomaly_detection_threshold: 0.1
+  batch_size: 1000
+  confidence_threshold: 0.8
+  enable_analytics: true
+  enable_predictive_maintenance: true
+  enable_process_optimization: true
+  model_update_interval_hours: 24
+compliance:
+  audit_retention_years: 7
+  auto_assessment_interval_days: 30
+  enable_compliance: true
+  enable_iec62443: true
+  enable_iso27001: true
+  enable_nist_csf: true
+  require_digital_signatures: true
+database:
+  backup_interval_hours: 24
+  database_url: sqlite:///data/scada_system.db
+  enable_backup: true
+  max_overflow: 0
+  pool_size: 20
+  pool_timeout: 30
+  retention_days: 365
+integration:
+  enable_cloud_integration: false
+  enable_erp_integration: false
+  enable_historian_integration: false
+  enable_integration: true
+  enable_mes_integration: false
+  max_retry_attempts: 3
+  sync_interval_minutes: 5
+monitoring:
+  alert_cooldown_minutes: 5
+  data_buffer_size: 10000
+  default_scan_rate_ms: 1000
+  enable_monitoring: true
+  enable_websocket: true
+  max_concurrent_clients: 100
+  websocket_port: 8765
+pipeline:
+  batch_processing_size: 100
+  distribution_queue_size: 5000
+  ingestion_queue_size: 50000
+  processing_queue_size: 10000
+  processing_timeout_seconds: 60
+  worker_threads: 4
+protocols:
+  connection_pool_size: 10
+  default_timeout: 10
+  enable_dnp3: true
+  enable_iec61850: true
+  enable_modbus_rtu: true
+  enable_modbus_tcp: true
+  max_retries: 3
+reporting:
+  default_format: html
+  enable_reporting: true
+  enable_scheduled_reports: true
+  max_report_size_mb: 50
+  report_retention_days: 90
+  template_directory: templates
+security:
+  enable_2fa: false
+  enable_security: true
+  jwt_expiry_hours: 8
+  max_login_attempts: 5
+  password_complexity: true
+  password_min_length: 12
+  session_timeout_minutes: 480
+system:
+  debug: false
+  environment: production
+  host: 0.0.0.0
+  log_level: INFO
+  max_workers: 4
+  port: 8000
+  timezone: UTC

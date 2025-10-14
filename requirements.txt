@@ -1,0 +1,8 @@
+pandas
+mysql-connector-python
+tensorflow
+scikit-learn
+requests
+joblib
+fastapi
+uvicorn[standard]

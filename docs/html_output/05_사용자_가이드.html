@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05_사용자_가이드</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 60px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 4px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        h2 {
+            color: #34495e;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+            font-size: 2em;
+        }
+        h3 {
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        h4 {
+            color: #666;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        ul, ol {
+            margin-left: 30px;
+            margin-bottom: 15px;
+        }
+        li {
+            margin-bottom: 8px;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9em;
+            color: #e74c3c;
+        }
+        pre {
+            background: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin: 20px 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            line-height: 1.5;
+        }
+        pre code {
+            background: none;
+            color: #ecf0f1;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th {
+            background: #3498db;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        tr:hover {
+            background: #f0f0f0;
+        }
+        blockquote {
+            border-left: 4px solid #3498db;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #555;
+            font-style: italic;
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-radius: 0 5px 5px 0;
+        }
+        .toc {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .toc h2 {
+            margin-top: 0;
+            border-bottom: none;
+        }
+        .toc ul {
+            list-style: none;
+            margin-left: 0;
+        }
+        .toc a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #ecf0f1;
+            margin: 40px 0;
+        }
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+            pre {
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SCADA AI 시스템 사용자 가이드</h1><h2>1. 개요</h2><p>본 문서는 SCADA AI 시스템을 처음 사용하는 사용자를 위한 종합 가이드입니다.</p><h3>1.1 시스템 정보</h3><table>
+<thead><tr>
+<th>항목</th>
+<th>내용</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>시스템명</td>
+<td>SCADA AI 엔터프라이즈 모니터링 시스템</td>
+</tr>
+<tr>
+<td>버전</td>
+<td>v2.0.0 (Enterprise Edition)</td>
+</tr>
+<tr>
+<td>접속 URL</td>
+<td>http://localhost:9000</td>
+</tr>
+<tr>
+<td>API 문서</td>
+<td>http://localhost:9000/docs</td>
+</tr>
+<tr>
+<td>WebSocket</td>
+<td>ws://localhost:9765</td>
+</tr>
+</tbody></table><h3>1.2 대상 사용자</h3><p>- 시스템 관리자 (Admin)
+- 운영자 (Operator)
+- 모니터링 담당자 (Viewer)</p><h2>2. 시작하기</h2><h3>2.1 시스템 요구사항</h3><p><strong>최소 요구사항</strong>:
+- OS: Windows 10/11, Linux, macOS
+- RAM: 4GB 이상
+- 디스크: 10GB 여유 공간
+- CPU: 2 코어 이상</p><p><strong>권장 요구사항</strong>:
+- RAM: 8GB 이상
+- 디스크: 20GB 여유 공간
+- CPU: 4 코어 이상</p><p><strong>필수 소프트웨어</strong>:
+- Docker Desktop 24.0 이상
+- Docker Compose 2.0 이상</p><h3>2.2 설치 방법</h3><h4>Windows 환경</h4><p><strong>1단계: WSL 2 설치</strong> (Windows만 해당)
+<pre><code># PowerShell 관리자 권한 실행
+wsl --install
+wsl --set-default-version 2
+</code></pre><p><strong>2단계: Docker Desktop 설치</strong>
+1. https://www.docker.com/products/docker-desktop 에서 다운로드
+2. 설치 파일 실행
+3. WSL 2 통합 활성화</p><p><strong>3단계: 프로젝트 실행</strong>
+<pre><code># 프로젝트 디렉토리로 이동
+cd "C:\새 폴더\scada_ai_project"</p><h1>Docker Compose로 시스템 시작</h1>
+docker-compose up -d
+</code></pre><p><strong>4단계: 시스템 확인</strong>
+<pre><code># 컨테이너 상태 확인
+docker-compose ps</p><h1>로그 확인</h1>
+docker-compose logs -f scada-ai
+</code></pre><h4>Linux/macOS 환경</h4><pre><code># Docker 및 Docker Compose 설치 (Ubuntu 예시)
+sudo apt-get update
+sudo apt-get install docker.io docker-compose</p><h1>프로젝트 실행</h1>
+cd /path/to/scada_ai_project
+docker-compose up -d
+</code></pre><h3>2.3 첫 접속</h3><p><strong>1. 브라우저에서 접속</strong>
+<pre><code>http://localhost:9000/docs
+</code></pre><p><strong>2. Swagger UI 확인</strong>
+- 모든 API 엔드포인트 목록 확인
+- 인터랙티브 API 테스트 가능</p><h2>3. 로그인 및 인증</h2><h3>3.1 로그인 방법</h3><h4>방법 1: Swagger UI 사용</h4><p>1. http://localhost:9000/docs 접속
+2. <code>POST /auth/login</code> 엔드포인트 찾기
+3. "Try it out" 클릭
+4. 로그인 정보 입력:
+   - username: <code>admin</code>
+   - password: <code>admin123</code>
+5. "Execute" 클릭
+6. Response에서 <code>access_token</code> 복사</p><h4>방법 2: cURL 사용</h4><pre><code>curl -X POST http://localhost:9000/auth/login \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  -d "username=admin&password=admin123"
+</code></pre><p><strong>응답 예시</strong>:
+<pre><code>{
+  "access_token": "demo_token_admin",
+  "token_type": "bearer",
+  "user": {
+    "username": "admin",
+    "role": "admin"
+  }
+}
+</code></pre><h3>3.2 API 호출 시 인증</h3><p><strong>Swagger UI에서</strong>:
+1. 페이지 상단 "Authorize" 버튼 클릭
+2. Value 입력란에 <code>demo_token_admin</code> 입력
+3. "Authorize" 클릭
+4. "Close" 클릭
+5. 이제 모든 API 호출 가능</p><p><strong>cURL에서</strong>:
+<pre><code>curl -X GET http://localhost:9000/monitoring/current \
+  -H "Authorization: Bearer demo_token_admin"
+</code></pre><h3>3.3 사용자 계정</h3><p><strong>기본 제공 계정</strong>:</p><table>
+<thead><tr>
+<th>사용자명</th>
+<th>비밀번호</th>
+<th>역할</th>
+<th>권한</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>admin</td>
+<td>admin123</td>
+<td>관리자</td>
+<td>모든 권한</td>
+</tr>
+</tbody></table><p><strong>역할별 권한</strong>:</p><table>
+<thead><tr>
+<th>기능</th>
+<th>Admin</th>
+<th>Operator</th>
+<th>Viewer</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>대시보드 조회</td>
+<td>O</td>
+<td>O</td>
+<td>O</td>
+</tr>
+<tr>
+<td>실시간 모니터링</td>
+<td>O</td>
+<td>O</td>
+<td>O</td>
+</tr>
+<tr>
+<td>알람 확인</td>
+<td>O</td>
+<td>O</td>
+<td>X</td>
+</tr>
+<tr>
+<td>시스템 설정</td>
+<td>O</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>사용자 관리</td>
+<td>O</td>
+<td>X</td>
+<td>X</td>
+</tr>
+<tr>
+<td>시스템 종료</td>
+<td>O</td>
+<td>X</td>
+<td>X</td>
+</tr>
+</tbody></table><h2>4. 주요 기능 사용법</h2><h3>4.1 실시간 모니터링</h3><p><strong>API 호출</strong>:
+<pre><code>GET /monitoring/current
+</code></pre><p><strong>Swagger UI에서</strong>:
+1. <code>GET /monitoring/current</code> 엔드포인트 찾기
+2. "Try it out" 클릭
+3. "Execute" 클릭</p><p><strong>응답 데이터</strong>:
+<pre><code>{
+  "timestamp": "2025-10-14T10:30:00",
+  "sensors": [
+    {
+      "id": "temp_001",
+      "name": "Inlet Temperature",
+      "value": 22.5,
+      "unit": "°C",
+      "status": "normal",
+      "min": 18.0,
+      "max": 25.0
+    },
+    {
+      "id": "pressure_001",
+      "name": "System Pressure",
+      "value": 3.2,
+      "unit": "bar",
+      "status": "normal",
+      "min": 2.0,
+      "max": 5.0
+    },
+    {
+      "id": "flow_001",
+      "name": "Flow Rate",
+      "value": 320.5,
+      "unit": "L/min",
+      "status": "normal",
+      "min": 100.0,
+      "max": 500.0
+    },
+    {
+      "id": "tank_001",
+      "name": "Tank Level",
+      "value": 75.3,
+      "unit": "%",
+      "status": "normal",
+      "min": 30.0,
+      "max": 95.0
+    },
+    {
+      "id": "ph_001",
+      "name": "pH Level",
+      "value": 7.2,
+      "unit": "pH",
+      "status": "normal",
+      "min": 6.5,
+      "max": 8.5
+    }
+  ],
+  "alerts": [],
+  "system_status": "running"
+}
+</code></pre><p><strong>센서 상태 의미</strong>:
+- <code>normal</code>: 정상 범위
+- <code>warning</code>: 주의 필요
+- <code>critical</code>: 즉시 조치 필요
+- <code>failure</code>: 센서 고장</p><h3>4.2 AI 분석 대시보드</h3><p><strong>API 호출</strong>:
+<pre><code>GET /analytics/dashboard
+</code></pre><p><strong>응답 데이터</strong>:
+<pre><code>{
+  "timestamp": "2025-10-14T10:30:00",
+  "predictions": {
+    "next_hour": {
+      "temperature": 23.1,
+      "pressure": 3.3,
+      "confidence": 0.87
+    },
+    "next_day": {
+      "temperature": 22.8,
+      "pressure": 3.2,
+      "confidence": 0.72
+    }
+  },
+  "anomalies": [
+    {
+      "sensor_id": "temp_001",
+      "timestamp": "2025-10-14T09:45:00",
+      "anomaly_score": 0.85,
+      "severity": "medium"
+    }
+  ],
+  "recommendations": [
+    "시스템 정상 작동 중",
+    "다음 1시간 내 온도 상승 예상 (약 0.6°C)",
+    "정기 점검 권장: 2025-10-20"
+  ],
+  "model_performance": {
+    "accuracy": 0.94,
+    "last_trained": "2025-10-13T08:00:00"
+  }
+}
+</code></pre><p><strong>데이터 해석</strong>:
+- <code>confidence</code>: 예측 신뢰도 (0-1, 높을수록 정확)
+- <code>anomaly_score</code>: 이상 점수 (0-1, 높을수록 이상)
+- <code>severity</code>: 심각도 (low, medium, high, critical)</p><h3>4.3 보고서 생성</h3><p><strong>API 호출</strong>:
+<pre><code>POST /reports/generate
+</code></pre><p><strong>요청 데이터</strong>:
+<pre><code>{
+  "report_type": "daily",
+  "format": "pdf",
+  "date": "2025-10-14",
+  "include_charts": true,
+  "include_analytics": true
+}
+</code></pre><p><strong>보고서 종류</strong>:
+- <code>daily</code>: 일일 운영 보고서
+- <code>weekly</code>: 주간 요약 보고서
+- <code>monthly</code>: 월간 분석 보고서
+- <code>incident</code>: 사고 보고서
+- <code>compliance</code>: 규정 준수 감사 보고서</p><p><strong>출력 형식</strong>:
+- <code>pdf</code>: PDF 파일
+- <code>html</code>: HTML 파일
+- <code>excel</code>: Excel 파일
+- <code>json</code>: JSON 데이터</p><p><strong>응답</strong>:
+<pre><code>{
+  "report_id": "RPT-20251014-001",
+  "filename": "daily_report_20251014.pdf",
+  "download_url": "/reports/download/RPT-20251014-001",
+  "generated_at": "2025-10-14T10:30:15",
+  "file_size": "2.5 MB"
+}
+</code></pre><h3>4.4 규정 준수 현황</h3><p><strong>API 호출</strong>:
+<pre><code>GET /compliance/dashboard
+</code></pre><p><strong>응답 데이터</strong>:
+<pre><code>{
+  "overall_compliance": 97,
+  "standards": {
+    "ISO27001": {
+      "compliance": 98,
+      "passed_checks": 49,
+      "failed_checks": 1,
+      "issues": [
+        {
+          "check_id": "ISO27001-A.12.4.1",
+          "description": "Event logging",
+          "status": "failed",
+          "recommendation": "Enable comprehensive event logging"
+        }
+      ]
+    },
+    "IEC62443": {
+      "compliance": 95,
+      "passed_checks": 19,
+      "failed_checks": 1,
+      "issues": [
+        {
+          "check_id": "IEC62443-3-3-SR1.1",
+          "description": "Human user identification",
+          "status": "failed",
+          "recommendation": "Implement multi-factor authentication"
+        }
+      ]
+    },
+    "NIST": {
+      "compliance": 98,
+      "passed_checks": 49,
+      "failed_checks": 1,
+      "issues": [
+        {
+          "check_id": "NIST-AC-2",
+          "description": "Account management",
+          "status": "failed",
+          "recommendation": "Review inactive accounts"
+        }
+      ]
+    }
+  },
+  "last_audit": "2025-10-13T00:00:00",
+  "next_audit": "2025-10-14T00:00:00"
+}
+</code></pre><p><strong>규정 준수 점수 의미</strong>:
+- 100-95%: 우수 (Excellent)
+- 94-85%: 양호 (Good)
+- 84-70%: 개선 필요 (Needs Improvement)
+- 69% 이하: 부적합 (Non-Compliant)</p><h3>4.5 시스템 상태 확인</h3><p><strong>API 호출</strong>:
+<pre><code>GET /status
+</code></pre><p><strong>응답 데이터</strong>:
+<pre><code>{
+  "status": "running",
+  "uptime_seconds": 3600,
+  "uptime_formatted": "1 hour, 0 minutes",
+  "version": "2.0.0",
+  "environment": "production",
+  "modules": {
+    "security_framework": true,
+    "protocol_manager": true,
+    "monitoring_system": true,
+    "analytics_engine": true,
+    "report_generator": true,
+    "compliance_manager": true,
+    "integration_manager": true,
+    "data_pipeline": true
+  },
+  "database": {
+    "type": "PostgreSQL",
+    "status": "connected",
+    "version": "14.0"
+  },
+  "cache": {
+    "type": "Redis",
+    "status": "connected",
+    "version": "7.0"
+  },
+  "active_connections": 5,
+  "processed_messages": 12450,
+  "memory_usage_mb": 2300,
+  "cpu_usage_percent": 0.3
+}
+</code></pre><h2>5. WebSocket 실시간 스트리밍</h2><h3>5.1 WebSocket 연결</h3><p><strong>JavaScript 예시</strong>:
+<pre><code>// WebSocket 연결
+const ws = new WebSocket('ws://localhost:9765/monitoring/stream');</p><p>// 연결 성공
+ws.onopen = function() {
+    console.log('Connected to SCADA AI System');
+};</p><p>// 데이터 수신
+ws.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    console.log('Sensor data:', data);
+    // 데이터 시각화 또는 처리
+    updateDashboard(data);
+};</p><p>// 에러 처리
+ws.onerror = function(error) {
+    console.error('WebSocket error:', error);
+};</p><p>// 연결 종료
+ws.onclose = function() {
+    console.log('Disconnected from SCADA AI System');
+    // 재연결 로직
+    setTimeout(connect, 5000);
+};
+</code></pre><p><strong>Python 예시</strong>:
+<pre><code>import websocket
+import json</p><p>def on_message(ws, message):
+    data = json.loads(message)
+    print(f"Sensor data: {data}")</p><p>def on_error(ws, error):
+    print(f"Error: {error}")</p><p>def on_close(ws):
+    print("Disconnected")</p><p>def on_open(ws):
+    print("Connected to SCADA AI System")</p><h1>WebSocket 연결</h1>
+ws = websocket.WebSocketApp(
+    "ws://localhost:9765/monitoring/stream",
+    on_message=on_message,
+    on_error=on_error,
+    on_close=on_close,
+    on_open=on_open
+)</p><p>ws.run_forever()
+</code></pre><h3>5.2 수신 데이터 형식</h3><p><strong>실시간 스트리밍 데이터</strong>:
+<pre><code>{
+  "timestamp": "2025-10-14T10:30:00.123Z",
+  "data": {
+    "sensors": [
+      {
+        "id": "temp_001",
+        "value": 22.5,
+        "status": "normal"
+      },
+      {
+        "id": "pressure_001",
+        "value": 3.2,
+        "status": "normal"
+      }
+    ],
+    "alerts": []
+  }
+}
+</code></pre><h2>6. 트러블슈팅</h2><h3>6.1 일반적인 문제</h3><h4>문제 1: 컨테이너가 시작되지 않음</h4><p><strong>증상</strong>:
+<pre><code>$ docker-compose up
+ERROR: ...
+</code></pre><p><strong>해결</strong>:
+<pre><code># 1. 기존 컨테이너 중지 및 제거
+docker-compose down</p><h1>2. 이미지 재빌드</h1>
+docker-compose build --no-cache</p><h1>3. 재시작</h1>
+docker-compose up -d</p><h1>4. 로그 확인</h1>
+docker-compose logs -f
+</code></pre><h4>문제 2: 인증 오류 (401 Unauthorized)</h4><p><strong>증상</strong>:
+<pre><code>{"detail": "Authentication required"}
+</code></pre><p><strong>해결</strong>:
+1. 로그인 API로 새 토큰 받기
+2. Authorization 헤더에 <code>Bearer {token}</code> 형식으로 추가
+3. Swagger UI의 경우 "Authorize" 버튼 클릭 후 토큰 입력</p><h4>문제 3: 데이터가 표시되지 않음</h4><p><strong>증상</strong>:
+- 센서 데이터 빈 배열
+- <code>"sensors": []</code></p><p><strong>원인</strong>:
+- 시스템이 막 시작됨 (데이터 수집 전)
+- 데이터 파이프라인 미작동</p><p><strong>해결</strong>:
+<pre><code># 1. 시스템 상태 확인
+curl http://localhost:9000/status</p><h1>2. 파이프라인 상태 확인</h1>
+curl http://localhost:9000/pipeline/status</p><h1>3. 1-2분 대기 후 재시도</h1>
+</code></pre><h4>문제 4: 포트 충돌</h4><p><strong>증상</strong>:
+<pre><code>ERROR: Port 9000 is already in use
+</code></pre><p><strong>해결</strong>:
+<pre><code># 1. 포트 사용 프로세스 확인 (Windows)
+netstat -ano | findstr :9000</p><h1>2. 프로세스 종료 또는 다른 포트 사용</h1>
+<h1>docker-compose.yml에서 포트 변경</h1>
+ports:
+  - "9001:9000"  # 9001로 변경
+</code></pre><h3>6.2 로그 확인 방법</h3><p><strong>전체 로그</strong>:
+<pre><code>docker-compose logs
+</code></pre><p><strong>특정 컨테이너 로그</strong>:
+<pre><code>docker-compose logs scada-ai
+docker-compose logs postgres
+docker-compose logs redis
+</code></pre><p><strong>실시간 로그 스트리밍</strong>:
+<pre><code>docker-compose logs -f scada-ai
+</code></pre><p><strong>최근 N줄만 보기</strong>:
+<pre><code>docker-compose logs --tail=100 scada-ai
+</code></pre><h3>6.3 데이터베이스 접속</h3><p><strong>PostgreSQL 접속</strong>:
+<pre><code>docker-compose exec postgres psql -U scada_user -d scada_ai
+</code></pre><p><strong>테이블 확인</strong>:
+<pre><code>\dt
+</code></pre><p><strong>데이터 조회</strong>:
+<pre><code>SELECT * FROM sensor_data LIMIT 10;
+</code></pre><p><strong>Redis 접속</strong>:
+<pre><code>docker-compose exec redis redis-cli
+</code></pre><p><strong>키 확인</strong>:
+<pre><code>KEYS *
+GET sensor:current:temp_001
+</code></pre><h2>7. 시스템 관리</h2><h3>7.1 시작 및 중지</h3><p><strong>시작</strong>:
+<pre><code>docker-compose up -d
+</code></pre><p><strong>중지</strong>:
+<pre><code>docker-compose stop
+</code></pre><p><strong>재시작</strong>:
+<pre><code>docker-compose restart
+</code></pre><p><strong>중지 및 제거</strong>:
+<pre><code>docker-compose down
+</code></pre><p><strong>볼륨까지 제거</strong> (주의: 데이터 삭제):
+<pre><code>docker-compose down -v
+</code></pre><h3>7.2 백업 및 복원</h3><p><strong>데이터베이스 백업</strong>:
+<pre><code># PostgreSQL 백업
+docker-compose exec postgres pg_dump -U scada_user scada_ai > backup_$(date +%Y%m%d).sql
+</code></pre><p><strong>데이터베이스 복원</strong>:
+<pre><code># PostgreSQL 복원
+docker-compose exec -T postgres psql -U scada_user scada_ai < backup_20251014.sql
+</code></pre><p><strong>파일 백업</strong>:
+<pre><code># 로그, 데이터, 보고서 백업
+tar -czf scada_backup_$(date +%Y%m%d).tar.gz logs/ data/ reports/
+</code></pre><h3>7.3 업데이트</h3><p><strong>시스템 업데이트</strong>:
+<pre><code># 1. 백업
+docker-compose exec postgres pg_dump -U scada_user scada_ai > backup_before_update.sql</p><h1>2. 중지</h1>
+docker-compose down</p><h1>3. 코드 업데이트</h1>
+git pull  # 또는 새 버전 다운로드</p><h1>4. 재빌드</h1>
+docker-compose build --no-cache</p><h1>5. 시작</h1>
+docker-compose up -d</p><h1>6. 확인</h1>
+docker-compose logs -f
+</code></pre><h2>8. 모범 사례</h2><h3>8.1 보안</h3><p>1. <strong>비밀번호 변경</strong>: 기본 비밀번호(<code>admin123</code>) 즉시 변경
+2. <strong>HTTPS 사용</strong>: 프로덕션에서는 HTTPS 필수
+3. <strong>방화벽 설정</strong>: 필요한 포트만 개방
+4. <strong>정기 업데이트</strong>: 보안 패치 적용
+5. <strong>로그 모니터링</strong>: 보안 이벤트 주기적 확인</p><h3>8.2 성능</h3><p>1. <strong>정기 백업</strong>: 일일 백업 권장
+2. <strong>로그 정리</strong>: 오래된 로그 정기적으로 삭제
+3. <strong>데이터베이스 최적화</strong>: 인덱스 재구성
+4. <strong>리소스 모니터링</strong>: CPU, 메모리 사용률 확인</p><h3>8.3 운영</h3><p>1. <strong>정기 점검</strong>: 주간 시스템 상태 확인
+2. <strong>문서화</strong>: 변경 사항 기록
+3. <strong>알람 설정</strong>: 중요 이벤트 알림 설정
+4. <strong>교육</strong>: 운영자 정기 교육</p><h2>9. FAQ</h2><p><strong>Q1: 시스템을 재시작하면 데이터가 사라지나요?</strong></p><p>A: 아니오. Docker 볼륨에 데이터가 저장되어 재시작해도 유지됩니다. 단, <code>docker-compose down -v</code> 명령어는 볼륨까지 삭제하므로 주의하세요.</p><p><strong>Q2: 다른 컴퓨터에서 접속할 수 있나요?</strong></p><p>A: 네. docker-compose.yml에서 <code>0.0.0.0:9000:9000</code>으로 설정되어 있으면 네트워크의 다른 컴퓨터에서 <code>http://{서버IP}:9000</code>으로 접속 가능합니다.</p><p><strong>Q3: 센서 데이터는 어디에 저장되나요?</strong></p><p>A: PostgreSQL 데이터베이스의 <code>sensor_data</code> 테이블에 저장됩니다. 실시간 데이터는 Redis 캐시에도 저장됩니다.</p><p><strong>Q4: 보고서는 어디에 저장되나요?</strong></p><p>A: <code>reports/</code> 디렉토리에 저장됩니다. Docker 볼륨 마운트로 호스트 시스템에서도 접근 가능합니다.</p><p><strong>Q5: 시스템을 중지하지 않고 설정을 변경할 수 있나요?</strong></p><p>A: 일부 설정은 API를 통해 동적으로 변경 가능하지만, 대부분의 설정 변경은 재시작이 필요합니다.</p><h2>10. 지원 및 문의</h2><h3>10.1 문제 보고</h3><p>GitHub Issues를 통해 버그 및 개선 사항을 보고해 주세요.</p><h3>10.2 추가 문서</h3><p>- API 문서: http://localhost:9000/docs
+- 개발자 가이드: <code>docs/02_개발계획서.md</code>
+- 문제 해결: <code>docs/04_완료보고서/07_문제해결_과정.md</code></p><hr></p><p><strong>문서 버전</strong>: 1.0
+<strong>작성일</strong>: 2025년 10월 14일
+<strong>문서 경로</strong>: <code>C:\새 폴더\scada_ai_project\docs\05_사용자_가이드.md</code>
+</p>
+    </div>
+</body>
+</html>
