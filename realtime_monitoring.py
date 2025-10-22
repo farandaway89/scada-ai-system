@@ -94,6 +94,7 @@ class Alert:
     message: str
     source_point: str
     current_value: Any
+    acknowledgement_required: bool = False
     acknowledged: bool = False
     acknowledged_by: Optional[str] = None
     acknowledged_time: Optional[datetime] = None
