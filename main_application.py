@@ -30,8 +30,8 @@ from cybersecurity_framework import SecurityFramework, SecurityEvent, ThreatType
 from ml_analytics_engine import MLAnalyticsEngine, AnalyticsType
 from realtime_monitoring import RealTimeMonitoringSystem, MonitoringPoint, AlertRule, AlertType, AlertPriority
 from professional_reporting import ReportGenerator, ReportConfiguration, ReportType, ReportFormat
-from compliance_audit_system import ComplianceManager, AuditTrailManager, ComplianceStandard, AuditEvent, AuditEventType
-from enterprise_integration import EnterpriseIntegrationManager, IntegrationConfig, IntegrationType
+from compliance_audit_system import ComplianceManager, AuditTrailManager, ComplianceStandard, AuditEvent, AuditEventType, AuditSeverity
+from enterprise_integration import EnterpriseIntegrationManager, IntegrationConfig, IntegrationType, MessageFormat
 from data_pipeline import IntegratedDataPipeline, create_integrated_pipeline
 
 # Configure logging
