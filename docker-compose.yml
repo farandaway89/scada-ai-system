@@ -4,13 +4,13 @@ services:
   # PostgreSQL Database
   postgres:
     image: postgres:14-alpine
-    container_name: scada_postgres
+    container_name: scada_postgres_advanced
     environment:
       POSTGRES_DB: scada_ai
       POSTGRES_USER: scada_user
       POSTGRES_PASSWORD: scada_pass_2024
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -25,9 +25,9 @@ services:
   # Redis Cache
   redis:
     image: redis:7-alpine
-    container_name: scada_redis
+    container_name: scada_redis_advanced
     ports:
-      - "6379:6379"
+      - "6380:6379"
     volumes:
       - redis_data:/data
     healthcheck:
@@ -42,10 +42,10 @@ services:
   # SCADA AI Application
   scada-ai:
     build: .
-    container_name: scada_ai_app
+    container_name: scada_ai_app_advanced
     ports:
-      - "9000:9000"      # HTTP API
-      - "9765:9765"      # WebSocket
+      - "9001:9000"      # HTTP API
+      - "9766:9765"      # WebSocket
     environment:
       - ENVIRONMENT=production
       - DB_HOST=postgres
@@ -87,4 +87,5 @@ volumes:
 
 networks:
   scada_network:
+    name: scada_network_advanced
     driver: bridge

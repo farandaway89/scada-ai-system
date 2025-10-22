@@ -21,7 +21,7 @@ from fastapi import FastAPI, HTTPException, Depends, BackgroundTasks, Form
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 import uvicorn
 
 # Import our integrated modules
@@ -630,6 +630,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Mount static files
+app.mount("/static", StaticFiles(directory="static"), name="static")
+
 # Security dependency
 security = HTTPBearer(auto_error=False)
 
@@ -665,77 +668,8 @@ async def login(username: str = Form(...), password: str = Form(...)):
 
 @app.get("/")
 async def root():
-    """Root endpoint with system information"""
-    return HTMLResponse(content="""
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <title>SCADA AI System</title>
-        <style>
-            body { font-family: Arial, sans-serif; margin: 40px; background: #f5f5f5; }
-            .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-            .header { text-align: center; margin-bottom: 30px; }
-            .status { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 20px 0; }
-            .card { background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #007bff; }
-            .value { font-size: 2em; font-weight: bold; color: #007bff; }
-            .nav { margin: 20px 0; }
-            .nav a { margin-right: 20px; color: #007bff; text-decoration: none; }
-            .nav a:hover { text-decoration: underline; }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <div class="header">
-                <h1>🏭 SCADA AI System</h1>
-                <p>Enterprise-Grade Industrial Automation Platform v2.0.0</p>
-            </div>
-
-            <div class="nav">
-                <a href="/status">System Status</a>
-                <a href="/docs">API Documentation</a>
-                <a href="/monitoring">Real-time Monitoring</a>
-                <a href="/analytics">Analytics Dashboard</a>
-                <a href="/reports">Reports</a>
-                <a href="/compliance">Compliance</a>
-            </div>
-
-            <div class="status">
-                <div class="card">
-                    <div class="value">🟢</div>
-                    <div>System Status</div>
-                    <small>All systems operational</small>
-                </div>
-                <div class="card">
-                    <div class="value">5</div>
-                    <div>Monitoring Points</div>
-                    <small>Active data collection</small>
-                </div>
-                <div class="card">
-                    <div class="value">24/7</div>
-                    <div>Real-time Monitoring</div>
-                    <small>Continuous operation</small>
-                </div>
-                <div class="card">
-                    <div class="value">🔐</div>
-                    <div>Enterprise Security</div>
-                    <small>Military-grade protection</small>
-                </div>
-            </div>
-
-            <h3>🔧 Integrated Modules</h3>
-            <ul>
-                <li>🔌 Industrial Protocol Support (Modbus, DNP3, IEC 61850)</li>
-                <li>🔐 Enterprise Security Framework</li>
-                <li>🧠 AI/ML Analytics Engine</li>
-                <li>📡 Real-time Monitoring & Alerting</li>
-                <li>📊 Professional Reporting System</li>
-                <li>📋 Compliance & Audit Management</li>
-                <li>🌐 Enterprise System Integration</li>
-            </ul>
-        </div>
-    </body>
-    </html>
-    """)
+    """Root endpoint - return the frontend dashboard"""
+    return FileResponse("static/index.html")
 
 @app.get("/status")
 async def system_status():
